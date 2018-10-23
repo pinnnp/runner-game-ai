@@ -19,7 +19,7 @@ public class Driver {
 			System.out.println("Generation #"+genNum+" started");
 			//crossover and mutation method here
 			generation.nextGen();
-			generation.genomes.add(generation.crossover());
+			for (int i=0; i<40; i++) {generation.genomes.add(generation.crossover());}
 			generation.mutation();
 			runGenomes(generation);
 			generation.keepBestGenomes();
@@ -30,12 +30,13 @@ public class Driver {
 	}
 	
 	public void runGenomes(Generation generation) {
-		for (int i=0; i<100; i++ ) {
-			if (Runner.state == Runner.STATE.GAME) {
+		for (int i=0; i<generation.genomes.size(); i++ ) {
+			while (Runner.state == Runner.STATE.GAME) {
 				// asdgfjkd;vjkf;
 				if (Runner.state == Runner.STATE.OVER) {
 					generation.getGenomes().get(i).setFitness(Runner.game.getScore());
 					System.out.println("Genome #"+i+" ended."+" Fitness: "+generation.genomes.get(i).getFitness());
+					break;
 				}
 			}
 		}
