@@ -17,7 +17,7 @@ public class Runner {
     public static STATE state = STATE.MENU;
     public static Driver driver; //*
 
-    private Runner() {
+    public Runner() {
         JFrame jframe = new JFrame();
 
         renderer = new Renderer();

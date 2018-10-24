@@ -1,6 +1,8 @@
 package ai;
 
 import java.util.ArrayList;
+import game.*;
+import game.Runner.STATE;
 
 public class Genome implements Comparable<Object>{
 	private ArrayList<Double> genome = new ArrayList<Double>(); //Contains speed, x from nearest obstacle, y of obstacle from ground, obstacle height
@@ -26,6 +28,22 @@ public class Genome implements Comparable<Object>{
 		}
 	}
 	
+	public void execute() {
+		new Runner();
+		Runner.state = STATE.GAME;
+		while (Runner.state != STATE.OVER) {
+			ArrayList<Double> inputs = new ArrayList<Double>();
+			inputs.add((double) Runner.game.pSpeed);
+			inputs.add((double) Runner.game.pColumnx);
+			inputs.add((double) Runner.game.pColumny);
+			inputs.add((double) Runner.game.pColumnh);
+			
+			double output = forward(inputs);
+			if (output >= 0.5) {
+				//TODO - input MOUSEEVENT TO THE GAME!
+			}
+		}
+	}
 
 	public ArrayList<Double> getGenome() {
 		return genome;

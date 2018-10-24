@@ -18,6 +18,10 @@ public class Game implements Runnable {
     private int ticks;
     private int score;
     private int level = 0;
+    public int pSpeed = 10;
+    public int pColumnx;
+    public int pColumny;
+    public int pColumnh;
 
     public Game() {
 
@@ -42,6 +46,9 @@ public class Game implements Runnable {
             for (int i = 0; i < c.columns.size(); i++) {
                 Rectangle column = c.columns.get(i);
                 column.x -= speed;
+                pColumnx = column.x;
+                pColumny = column.y;
+                pColumnh = column.height;
             }
 
             if (ticks % 2 == 0 && player.ymotion < 15) {
@@ -52,6 +59,7 @@ public class Game implements Runnable {
             if (ticks % 500 == 0) {
                 level++;
                 speed = (int)round(speed * 1.2);
+                pSpeed = speed;
             }
             
             for (int i = 0; i < c.columns.size(); i++) {
@@ -196,5 +204,8 @@ public class Game implements Runnable {
     public int getScore() {
     	return this.score;
     }
-
+    
+    public int getTicks() {
+    	return ticks;
+    }
 }
