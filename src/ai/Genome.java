@@ -12,13 +12,13 @@ public class Genome implements Comparable<Object>{
 
 	public Genome() {
 		for (int i = 0; i < 4; i++) {
-			this.genome.add(Math.random()); 
+			this.genome.add(Math.random());
 		}
 	}
 	
 	public Genome(ArrayList<Integer> indexOfGenes, ArrayList<Double> oldGenome) { //Two parameters must have the same length
 		for (int i = 0; i < 4; i++) {
-			this.genome.add(Math.random()); 
+			this.genome.add(Math.random());
 		}
 		
 		for (int i  = 0; i < indexOfGenes.size(); i++) {
@@ -52,15 +52,15 @@ public class Genome implements Comparable<Object>{
 		return result;
 	}
 	
-	 public double forward(ArrayList<Double> inputs) {
-		  double output = 0;
-		  for (int i = 0; i < inputs.size(); i++) {
-		   output += inputs.get(i) * this.genome.get(i);
-		  }
-		  output = sigmoid(output);
-		  return output;
-		 }
-		 public double sigmoid(double b) {
-		  return 1/(1 + Math.pow(Math.E, b));
-		 }
+	public double forward(ArrayList<Double> inputs) {
+		double output = 0;
+		for (int i = 0; i < inputs.size(); i++) {
+			output += inputs.get(i) * this.genome.get(i);
+		}
+		output = sigmoid(output);
+		return output;
+	}
+	public double sigmoid(double b) {
+		return 1/(1 + Math.pow(Math.E, b));
+	}
 }
