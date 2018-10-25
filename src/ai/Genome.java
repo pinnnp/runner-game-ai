@@ -3,6 +3,8 @@ package ai;
 import java.util.ArrayList;
 import game.*;
 import game.Runner.STATE;
+import javafx.scene.input.MouseEvent;
+import javax.swing.JButton;
 
 public class Genome implements Comparable<Object>{
 	private ArrayList<Double> genome = new ArrayList<Double>(); //Contains speed, x from nearest obstacle, y of obstacle from ground, obstacle height
@@ -40,8 +42,11 @@ public class Genome implements Comparable<Object>{
 			
 			double output = forward(inputs);
 			if (output >= 0.5) {
-				//TODO - input MOUSEEVENT TO THE GAME!
-			}
+				Runner.game.player.jump();
+                Runner.game.player.uncrouch();
+			} else if (Runner.game.player.jumping == 0) {
+                Runner.game.player.crouch();
+            }
 		}
 	}
 

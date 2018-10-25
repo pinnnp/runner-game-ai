@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class Game implements Runnable {
 
     private final Controller c;
-    private final Player player;
+    public final Player player;
     private int ticks;
     private int score;
     private int level = 0;
