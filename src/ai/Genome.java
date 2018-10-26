@@ -33,6 +33,7 @@ public class Genome implements Comparable<Object>{
 	public void execute() {
 		new Runner();
 		Runner.state = STATE.GAME;
+		Runner.start();
 		while (Runner.state != STATE.OVER) {
 			ArrayList<Double> inputs = new ArrayList<Double>();
 			inputs.add((double) Runner.game.pSpeed);

@@ -31,7 +31,7 @@ public class Driver {
 	
 	public void runGenomes(Generation generation) {
 		for (int i=0; i<generation.genomes.size(); i++ ) {
-			// Genome.execute();
+			generation.genomes.get(i).execute();
 				if (Runner.state == Runner.STATE.OVER) {
 					generation.getGenomes().get(i).setFitness(Runner.game.getScore());
 					System.out.println("Genome #"+i+" ended."+" Fitness: "+generation.genomes.get(i).getFitness());
@@ -39,6 +39,10 @@ public class Driver {
 				}
 			}
 		}
+	public static void main(String[] args) {
+		new Driver();
+	}
+
 	
 	
 	

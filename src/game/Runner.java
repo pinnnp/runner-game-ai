@@ -22,7 +22,7 @@ public class Runner {
 
         renderer = new Renderer();
 
-        menu = new Menu();
+        //menu = new Menu();
 
         jframe.add(renderer);
 
