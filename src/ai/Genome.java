@@ -1,21 +1,33 @@
 package ai;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import game.*;
 import game.Runner.STATE;
 
 public class Genome implements Comparable<Object>{
 	private ArrayList<Double> genome = new ArrayList<Double>(); //Contains speed, x from nearest obstacle, y of obstacle from ground, obstacle height
 	private double fitness;
+	private int action;
 	
 	public void setGenome(ArrayList<Double> genome) {
 		this.genome = genome;
 	}
 
 	public Genome() {
-		for (int i = 0; i < 4; i++) {
-			this.genome.add(Math.random());
-		}
+		this.genome.add(getRandomNumberInRange(10.0, 500.0));
+		this.genome.add(getRandomNumberInRange(10.0, Runner.WIDTH) - Runner.WIDTH / 3);
+		Random random = new Random(); 
+		double hole = random.nextBoolean() ? 20.0 : 0.0;
+		this.genome.add(hole);
+		this.genome.add(10.0 + random.nextInt(120));
+		/* 0: Nothing
+		 * 1: Jump
+		 * 2: Crouch
+		 */
+		this.action = random.nextInt(2);
+		
 	}
 	
 	public Genome(ArrayList<Integer> indexOfGenes, ArrayList<Double> oldGenome) { //Two parameters must have the same length
@@ -28,22 +40,19 @@ public class Genome implements Comparable<Object>{
 		}
 	}
 	
-	public void execute() {
-		new Runner();
-		Runner.state = STATE.GAME;
-		while (Runner.state != STATE.OVER) {
-			ArrayList<Double> inputs = new ArrayList<Double>();
-			inputs.add((double) Runner.game.pSpeed);
-			inputs.add((double) Runner.game.pColumnx);
-			inputs.add((double) Runner.game.pColumny);
-			inputs.add((double) Runner.game.pColumnh);
-			
-			double output = forward(inputs);
-			if (output >= 0.5) {
-				//TODO - input MOUSEEVENT TO THE GAME!
-			}
-		}
-	}
+//	public void execute() {
+//		new Runner();
+//		Runner.state = STATE.GAME;
+//		while (Runner.state != STATE.OVER) {
+//			ArrayList<Double> inputs = new ArrayList<Double>();
+//			inputs.add((double) Runner.game.pSpeed);
+//			inputs.add((double) Runner.game.pColumnx);
+//			inputs.add((double) Runner.game.pColumny);
+//			inputs.add((double) Runner.game.pColumnh);
+//			
+//			
+//		}
+//	}
 
 	public ArrayList<Double> getGenome() {
 		return genome;
@@ -78,7 +87,20 @@ public class Genome implements Comparable<Object>{
 		output = sigmoid(output);
 		return output;
 	}
+	
 	public double sigmoid(double b) {
 		return 1/(1 + Math.pow(Math.E, b));
+	}
+	
+	private static double getRandomNumberInRange(double min, double max) {
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+		return (double) Math.random() * max + min;
+	}
+	
+	public int act() {
+		return this.action;
 	}
 }

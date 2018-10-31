@@ -18,6 +18,7 @@ public class Game implements Runnable {
     private int ticks;
     private int score;
     private int level = 0;
+    
     public int pSpeed = 10;
     public int pColumnx;
     public int pColumny;
@@ -55,10 +56,10 @@ public class Game implements Runnable {
                 player.ymotion += 2;
             }
             
-            // if reach 500 ticks then level up speed*1.2
+            // if reach 500 ticks then level up speed * 1.2
             if (ticks % 500 == 0) {
                 level++;
-                speed = (int)round(speed * 1.2);
+                speed = (int) round(speed * 1.2);
                 pSpeed = speed;
             }
             
