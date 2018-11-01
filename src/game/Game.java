@@ -39,7 +39,7 @@ public class Game implements Runnable {
     @Override
     public void run() {
         int speed = 10; //initial speed
-        System.out.println("Game.run()");
+        //System.out.println("Game.run()");
         
         while (Runner.state == Runner.STATE.GAME) {
             ticks++;
@@ -109,7 +109,7 @@ public class Game implements Runnable {
         }
 
         Runner.renderer.repaint();
-        System.out.println("Game.run() end");
+        //System.out.println("Game.run() end");
     }
 
     void render(Graphics g) {

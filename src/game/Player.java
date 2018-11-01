@@ -29,7 +29,7 @@ public class Player extends Rectangle {
     	if (!crouched) {
             this.height -= 20;
             this.y = 460;
-            System.out.println("CROUCHED : " + height);
+            //System.out.println("CROUCHED : " + height);
             this.crouched = true;
     	} else {
             uncrouch();

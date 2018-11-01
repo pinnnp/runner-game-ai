@@ -5,8 +5,8 @@ import java.util.Random;
 
 import game.*;
 import game.Runner.STATE;
-import javafx.scene.input.MouseEvent;
-import javax.swing.JButton;
+//import javafx.scene.input.MouseEvent;
+//import javax.swing.JButton;
 
 public class Genome implements Comparable<Object>{
 	private ArrayList<Double> genome = new ArrayList<Double>(); //Contains speed, x from nearest obstacle, y of obstacle from ground, obstacle height
@@ -42,7 +42,7 @@ public class Genome implements Comparable<Object>{
 	}
 	
 
-	public void execute() {
+	/*public void execute() {
 		new Runner();
 		Runner.state = STATE.GAME;
 		Runner.start();
@@ -55,13 +55,63 @@ public class Genome implements Comparable<Object>{
 			
 			double output = forward(inputs);
 			if (output >= 0.5) {
+				System.out.println("Jumped");
 				Runner.game.player.jump();
                 Runner.game.player.uncrouch();
 			} else if (Runner.game.player.jumping == 0) {
                 Runner.game.player.crouch();
+                System.out.println("crouch");
             }
 		}
+		//Runner.quit();
+		
+	}*/
+	
+	public void execute() {
+		new Runner();
+		Runner.state = STATE.GAME;
+		Runner.start();
+		int count = 0;
+		while (Runner.state != STATE.OVER) {
+			
+			ArrayList<Double> inputs = new ArrayList<Double>();
+			inputs.add((double) Runner.game.pSpeed);
+			inputs.add((double) Runner.game.pColumnx);
+			inputs.add((double) Runner.game.pColumny);
+			inputs.add((double) Runner.game.pColumnh);
+			
+			if (this.genome.get(0) > inputs.get(0)*90/100 && this.genome.get(0) < inputs.get(0)*110/100) {
+				count++;
+			}
+			if (this.genome.get(1) > inputs.get(1)*90/100 && this.genome.get(1) < inputs.get(1)*110/100) {
+				count++;
+			}
+			if (this.genome.get(2) == inputs.get(2)) {
+				count++;
+			}
+			if (this.genome.get(3) > inputs.get(3)*90/100 && this.genome.get(3) < inputs.get(3)*110/100) {
+				count++;
+			}
+			
+			if (count > 2) {
+				if (this.action == 0) { System.out.println("Do nothing");}
+				if (this.action == 1) {
+					Runner.game.player.jump();
+					Runner.game.player.uncrouch();
+					System.out.println("Jumped");
+					count = 0;
+				}
+				if (this.action == 2) {
+					if (Runner.game.player.jumping == 0) {
+						System.out.println("crouch");
+						Runner.game.player.crouch();
+						count = 0;
+					}
+				}
+			}
+		}
 	}
+	
 	public ArrayList<Double> getGenome() {
 		return genome;
 	}
@@ -87,18 +137,21 @@ public class Genome implements Comparable<Object>{
 		return result;
 	}
 	
-	public double forward(ArrayList<Double> inputs) {
+	/*public double forward(ArrayList<Double> inputs) {
 		double output = 0;
 		for (int i = 0; i < inputs.size(); i++) {
 			output += inputs.get(i) * this.genome.get(i);
 		}
+		//System.out.println(output);
+		output = Math.tanh(output);
 		output = sigmoid(output);
+		//System.out.println(output);
 		return output;
 	}
 	
 	public double sigmoid(double b) {
-		return 1/(1 + Math.pow(Math.E, b));
-	}
+		return 1/(1 + Math.pow(Math.E, (-1 * b)));
+	}*/
 	
 	public void mutates(int n) {
 		if (n == 0) {
