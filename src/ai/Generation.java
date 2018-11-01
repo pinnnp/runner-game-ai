@@ -48,7 +48,7 @@ public class Generation {
 		Genome newGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
 		ArrayList<Double> genome = newGenome.getGenome();
 		if(Math.random() < MUTATION_RATE) {
-			
+			newGenome.mutates(random.nextInt(3));
 		}
 		newGenome.setGenome(genome);
 		return newGenome;

@@ -100,6 +100,19 @@ public class Genome implements Comparable<Object>{
 		return 1/(1 + Math.pow(Math.E, b));
 	}
 	
+	public void mutates(int n) {
+		if (n == 0) {
+			this.genome.set(n, getRandomNumberInRange(10.0, 500.0));
+		}else if(n == 1) {
+			this.genome.set(n, getRandomNumberInRange(10.0, Runner.WIDTH) - Runner.WIDTH / 3);
+		}else if (n == 2){
+			this.genome.set(n, this.genome.get(n)==0.0 ? 20.0:0.0);
+		}else {
+			Random random = new Random();
+			this.genome.set(n, 10.0 + random.nextInt(120));
+		}
+	}
+	
 	private static double getRandomNumberInRange(double min, double max) {
 
 		if (min >= max) {
