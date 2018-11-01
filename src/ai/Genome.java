@@ -42,21 +42,7 @@ public class Genome implements Comparable<Object>{
 		}
 	}
 	
-<<<<<<< HEAD
-//	public void execute() {
-//		new Runner();
-//		Runner.state = STATE.GAME;
-//		while (Runner.state != STATE.OVER) {
-//			ArrayList<Double> inputs = new ArrayList<Double>();
-//			inputs.add((double) Runner.game.pSpeed);
-//			inputs.add((double) Runner.game.pColumnx);
-//			inputs.add((double) Runner.game.pColumny);
-//			inputs.add((double) Runner.game.pColumnh);
-//			
-//			
-//		}
-//	}
-=======
+
 	public void execute() {
 		new Runner();
 		Runner.state = STATE.GAME;
@@ -77,8 +63,6 @@ public class Genome implements Comparable<Object>{
             }
 		}
 	}
->>>>>>> fea0301e5bd524eacbb137622523bd9479de9aea
-
 	public ArrayList<Double> getGenome() {
 		return genome;
 	}
