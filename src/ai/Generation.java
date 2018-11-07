@@ -46,11 +46,12 @@ public class Generation {
 	public Genome mutation() {
 		Random random = new Random();
 		Genome newGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
-		ArrayList<Double> genome = newGenome.getGenome();
+		/*
 		if(Math.random() < MUTATION_RATE) {
 			newGenome.mutates(random.nextInt(3));
 		}
-		newGenome.setGenome(genome);
+		*/
+		newGenome.mutates(random.nextInt(3));
 		return newGenome;
 	}
 	

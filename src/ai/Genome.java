@@ -1,5 +1,7 @@
 package ai;
 
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -23,12 +25,12 @@ public class Genome implements Comparable<Object>{
 		Random random = new Random(); 
 		double hole = random.nextBoolean() ? 20.0 : 0.0;
 		this.genome.add(hole);
-		this.genome.add(10.0 + random.nextInt(120));
+		this.genome.add(10.0 + random.nextInt(121));
 		/* 0: Nothing
 		 * 1: Jump
 		 * 2: Crouch
 		 */
-		this.action = random.nextInt(2);
+		this.action = random.nextInt(3);
 	}
 	
 	public Genome(ArrayList<Integer> indexOfGenes, ArrayList<Double> oldGenome) { //Two parameters must have the same length
@@ -94,9 +96,9 @@ public class Genome implements Comparable<Object>{
 			}
 			
 			if (count > 2) {
-				if (this.action == 0) { System.out.println("Do nothing");}
+				if (this.action == 0) { System.out.println("Do nothing"); count = 0;}
 				if (this.action == 1) {
-					Runner.game.player.jump();
+					if(Runner.game.player.jumping < 2) Runner.game.player.jump();
 					Runner.game.player.uncrouch();
 					System.out.println("Jumped");
 					count = 0;
