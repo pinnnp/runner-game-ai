@@ -22,6 +22,7 @@ public class Generation {
 	//public execute
 	
 	public void keepBestGenomes() {
+		bestGenomes.clear();
 		genomes.sort(Collections.reverseOrder());
 		for (int i = 0; i < NUM_BEST_GENOMES; i++) {
 			bestGenomes.add(genomes.get(i));
@@ -29,10 +30,12 @@ public class Generation {
 	}
 	
 	public void nextGen() {
-		ArrayList<Genome> genomes = new ArrayList<Genome>();
+		genomes.clear();
 		for (int i=0; i<bestGenomes.size(); i++) {
 			genomes.add(bestGenomes.get(i));
 		}
+		for (int i=0; i<50; i++) {genomes.add(crossover());}
+		for (int i=0; i<20; i++) {genomes.add(mutation());}
 	}
 	
 	public Genome crossover() {
@@ -85,20 +88,23 @@ public class Generation {
 				if (g.get(2) == inputs.get(2)) count++;
 				if (g.get(3) > inputs.get(3)*90/100 && g.get(3) < inputs.get(3)*110/100) count++;
 			
-			if (count >3) {
-				if (g.act() == 0) { /*System.out.println("Do nothing");*/ count=0;}
+			if (count >2) {
+				//System.out.println(count);
+				if (g.act() == 0) { /*System.out.println("Do nothing"); */  count = 0; }
 				if (g.act() == 1) {
-					if(Runner.game.player.jumping < 2) Runner.game.player.jump();
-					Runner.game.player.uncrouch();
-					//System.out.println("Jumped");
-					count=0;
+					if(Runner.game.player.jumping < 2) {
+						Runner.game.player.jump();
+						Runner.game.player.uncrouch();
+						//System.out.println("Jumped");
+						}
+					 count = 0;
 				}
 				if (g.act() == 2) {
 					if (Runner.game.player.jumping == 0) {
 						//System.out.println("crouch");
 						Runner.game.player.crouch();
-						count=0;
 					}
+					 count = 0;
 				}
 				if (Runner.state != STATE.OVER) {
 					g.setFitness(g.getFitness()+0.0000001);

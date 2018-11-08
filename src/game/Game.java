@@ -170,27 +170,6 @@ public class Game implements Runnable {
         }
     }
     
-    /*public void keyPressed(KeyEvent e) {
-        System.out.println("pressed");
-        switch (Runner.state) {
-            case GAME:
-                System.out.println(Runner.state);
-                // si clic gauche
-                if (e.getButton() == e.VK_UP) {
-                    player.jump();
-                    player.uncrouch();
-                } else if (player.jumping == 0) {
-                    player.crouch();
-                }
-                break;
-            case OVER:
-                System.out.println(Runner.state);
-                Runner.state = Runner.STATE.MENU;
-                Runner.renderer.repaint();
-                break;
-        }
-    }*/
-    
     public void mouseReleased(MouseEvent e) {
         // si clic droit pendant l'état de jeu
         if (e.getButton() == 3 && player.crouched) {

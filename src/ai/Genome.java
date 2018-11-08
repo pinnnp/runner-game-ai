@@ -31,6 +31,7 @@ public class Genome implements Comparable<Object>{
 		 * 2: Crouch
 		 */
 		this.action = random.nextInt(3);
+		this.fitness = 0;
 	}
 	
 	public Genome(ArrayList<Integer> indexOfGenes, ArrayList<Double> oldGenome) { //Two parameters must have the same length

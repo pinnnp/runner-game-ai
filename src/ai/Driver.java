@@ -20,8 +20,6 @@ public class Driver {
 			System.out.println("Generation #"+genNum+" started");
 			//crossover and mutation method here
 			generation.nextGen();
-			for (int i=0; i<40; i++) {generation.genomes.add(generation.crossover());}
-			generation.mutation();
 			generation.execute();
 			//runGenomes(generation);
 			generation.keepBestGenomes();
