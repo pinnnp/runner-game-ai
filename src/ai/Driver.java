@@ -10,7 +10,8 @@ public class Driver {
 		Generation generation = new Generation();
 		int genNum=0;
 		System.out.println("Generation #0 started");
-		runGenomes(generation);
+		generation.execute();
+		//runGenomes(generation);
 		generation.keepBestGenomes();
 		System.out.println("Generation #0 ended"+" Fittest: "+generation.getBestGenomes().get(0).getFitness());
 		System.out.println("----------------------------------------------------------");
@@ -21,7 +22,8 @@ public class Driver {
 			generation.nextGen();
 			for (int i=0; i<40; i++) {generation.genomes.add(generation.crossover());}
 			generation.mutation();
-			runGenomes(generation);
+			generation.execute();
+			//runGenomes(generation);
 			generation.keepBestGenomes();
 			System.out.println("Generation #"+genNum+" ended"+" Fittest: "+generation.getBestGenomes().get(0).getFitness());
 			System.out.println("----------------------------------------------------------");
@@ -29,16 +31,16 @@ public class Driver {
 		
 	}
 	
-	public void runGenomes(Generation generation) {
-		for (int i=0; i<generation.genomes.size(); i++ ) {
-			generation.genomes.get(i).execute();
-				if (Runner.state == Runner.STATE.OVER) {
-					generation.getGenomes().get(i).setFitness(Runner.game.getScore());
-					System.out.println("Genome #"+i+" ended."+" Fitness: "+generation.genomes.get(i).getFitness());
+	/*public void runGenomes(Generation generation) {
+		//for (int i=0; i<generation.genomes.size(); i++ ) {
+			generation.execute();
+			if (Runner.state == Runner.STATE.OVER) {
+					//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
+					System.out.println("Genome #"+id+" ended."+" Fitness: "+generation.genomes.get(i).getFitness());
 					//Runner.quit();
 				}
-			}
-		}
+			
+		}*/
 	public static void main(String[] args) {
 		new Driver();
 	}
