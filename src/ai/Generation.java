@@ -87,34 +87,34 @@ public class Generation {
 				if (g.get(1) > inputs.get(1)*90/100 && g.get(1) < inputs.get(1)*110/100) count++;
 				if (g.get(2) == inputs.get(2)) count++;
 				if (g.get(3) > inputs.get(3)*90/100 && g.get(3) < inputs.get(3)*110/100) count++;
-			
-			if (count >2) {
-				//System.out.println(count);
-				if (g.act() == 0) { /*System.out.println("Do nothing"); */  count = 0; }
-				if (g.act() == 1) {
-					if(Runner.game.player.jumping < 2) {
-						Runner.game.player.jump();
-						Runner.game.player.uncrouch();
-						//System.out.println("Jumped");
-						}
-					 count = 0;
-				}
-				if (g.act() == 2) {
-					if (Runner.game.player.jumping == 0) {
-						//System.out.println("crouch");
-						Runner.game.player.crouch();
+				if (count >2) {
+					//System.out.println(count);
+					if (g.act() == 0) { /*System.out.println("Do nothing"); */  count = 0; }
+					if (g.act() == 1) {
+						if(Runner.game.player.jumping < 2) {
+							Runner.game.player.jump();
+							Runner.game.player.uncrouch();
+							//System.out.println("Jumped");
+							}
+						 count = 0;
 					}
-					 count = 0;
+					if (g.act() == 2) {
+						if (Runner.game.player.jumping == 0) {
+							//System.out.println("crouch");
+							Runner.game.player.crouch();
+						}
+						 count = 0;
+					}
+					if (Runner.state != STATE.OVER) {
+						g.setFitness(g.getFitness()+0.0000001);
+					}
+					if (Runner.state == Runner.STATE.OVER) {
+						//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
+						System.out.println("Genome ended."+" Fitness: "+g.getFitness());
+						//Runner.quit();
+					}
+					break;
 				}
-				if (Runner.state != STATE.OVER) {
-					g.setFitness(g.getFitness()+0.0000001);
-				}
-				if (Runner.state == Runner.STATE.OVER) {
-					//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
-					System.out.println("Genome ended."+" Fitness: "+g.getFitness());
-					//Runner.quit();
-				}
-			}
 			}
 		}
 	}
