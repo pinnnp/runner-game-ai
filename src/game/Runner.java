@@ -1,7 +1,10 @@
 package game;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import javax.swing.*;
+
 
 import ai.*;
 
@@ -11,7 +14,7 @@ public class Runner {
 
     public static final int WIDTH = 1300, HEIGHT = 600;
     public static Game game;
-
+    
     public static Menu menu;
     public static Renderer renderer;
     public static STATE state = STATE.MENU;
@@ -19,7 +22,6 @@ public class Runner {
 
     public Runner() {
         JFrame jframe = new JFrame();
-
         renderer = new Renderer();
 
         //menu = new Menu();
@@ -29,11 +31,15 @@ public class Runner {
         jframe.addMouseListener(new MouseInput());
 
         jframe.setTitle("Runner");
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         jframe.setSize(WIDTH, HEIGHT);
         jframe.setResizable(false);
         jframe.setVisible(true);
         
+        if (Runner.state == Runner.STATE.OVER) {
+        	jframe.setVisible(false);
+        	jframe.dispose();
+        }
     }
 
     public static void start() {
@@ -56,6 +62,7 @@ public class Runner {
         OVER
     }
     
+   
 }
 
 

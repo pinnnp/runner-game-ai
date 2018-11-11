@@ -26,7 +26,6 @@ public class Driver {
 			System.out.println("Generation #"+genNum+" ended"+" Fittest: "+generation.getBestGenomes().get(0).getFitness());
 			System.out.println("----------------------------------------------------------");
 		}
-		
 	}
 	
 	/*public void runGenomes(Generation generation) {

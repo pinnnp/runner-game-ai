@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import javax.swing.JFrame;
+
 import game.Runner;
 import game.Runner.STATE;
 
@@ -111,11 +113,11 @@ public class Generation {
 					if (Runner.state == Runner.STATE.OVER) {
 						//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
 						System.out.println("Genome ended."+" Fitness: "+g.getFitness());
-						//Runner.quit();
 					}
 					break;
 				}
-			}
-		}
+			} 
+		} 
 	}
+	
 }
