@@ -98,6 +98,9 @@ public class Generation {
 							Runner.game.player.uncrouch();
 							//System.out.println("Jumped");
 							}
+						if (Runner.state != STATE.OVER) {
+							g.setFitness(g.getFitness()+0.0000001);
+						}
 						 count = 0;
 					}
 					if (g.act() == 2) {
@@ -105,10 +108,10 @@ public class Generation {
 							//System.out.println("crouch");
 							Runner.game.player.crouch();
 						}
+						if (Runner.state != STATE.OVER) {
+							g.setFitness(g.getFitness()+0.0000001);
+						}
 						 count = 0;
-					}
-					if (Runner.state != STATE.OVER) {
-						g.setFitness(g.getFitness()+0.0000001);
 					}
 					if (Runner.state == Runner.STATE.OVER) {
 						//generation.getGenomes().get(i).setFitness(Runner.game.getScore());

@@ -14,13 +14,15 @@ public class Runner {
 
     public static final int WIDTH = 1300, HEIGHT = 600;
     public static Game game;
-    
+    public static JFrame jframe;
     public static Menu menu;
     public static Renderer renderer;
     public static STATE state = STATE.MENU;
     public static Driver driver; //*
 
     public Runner() {
+    	
+    	
         JFrame jframe = new JFrame();
         renderer = new Renderer();
 
@@ -37,8 +39,7 @@ public class Runner {
         jframe.setVisible(true);
         
         if (Runner.state == Runner.STATE.OVER) {
-        	jframe.setVisible(false);
-        	jframe.dispose();
+        	jframe.dispatchEvent(new WindowEvent(jframe, WindowEvent.WINDOW_CLOSING));
         }
     }
 
@@ -62,7 +63,11 @@ public class Runner {
         OVER
     }
     
-   
+    public static void close(JFrame jframe) {
+    	
+        	jframe.dispatchEvent(new WindowEvent(jframe, WindowEvent.WINDOW_CLOSING));
+        
+    }
 }
 
 
