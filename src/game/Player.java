@@ -15,12 +15,16 @@ public class Player extends Rectangle {
 
     // fait sauter player
     public void jump() {
+
         if (ymotion > 0) {
             ymotion = 0;
         }
         if (jumping < 2) {
             jumping++;
             ymotion -= 10;
+        }
+        if (ymotion < -10) {
+        	ymotion = -10;
         }
     }
 

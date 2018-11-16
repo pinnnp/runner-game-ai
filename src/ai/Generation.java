@@ -1,5 +1,8 @@
 package ai;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -14,7 +17,7 @@ public class Generation {
 	ArrayList<Genome> bestGenomes = new ArrayList<Genome>();
 	final static double MUTATION_RATE = 0.25;
 	final static int NUM_BEST_GENOMES = 30; // 1 generation has 30 best genomes out of 100 genomes.
-	
+	public Robot robot;
 	public Generation() {
 		for (int i = 0; i < 100; i++) {
 			genomes.add(new Genome());
@@ -73,6 +76,12 @@ public class Generation {
 	
 	public void execute() {
 		new Runner();
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Runner.state = STATE.GAME;
 		Runner.start();
 		int count = 0;
@@ -91,12 +100,13 @@ public class Generation {
 				if (g.get(3) > inputs.get(3)*90/100 && g.get(3) < inputs.get(3)*110/100) count++;
 				if (count >2) {
 					//System.out.println(count);
+					//System.out.println(Runner.game.player.y);
 					if (g.act() == 0) { /*System.out.println("Do nothing"); */  count = 0; }
 					if (g.act() == 1) {
+						//robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 						if(Runner.game.player.jumping < 2) {
 							Runner.game.player.jump();
 							Runner.game.player.uncrouch();
-							//System.out.println("Jumped");
 							}
 						if (Runner.state != STATE.OVER) {
 							g.setFitness(g.getFitness()+0.0000001);
@@ -105,7 +115,6 @@ public class Generation {
 					}
 					if (g.act() == 2) {
 						if (Runner.game.player.jumping == 0) {
-							//System.out.println("crouch");
 							Runner.game.player.crouch();
 						}
 						if (Runner.state != STATE.OVER) {

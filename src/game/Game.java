@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import static java.lang.Math.round;
@@ -54,6 +55,7 @@ public class Game implements Runnable {
 
             if (ticks % 2 == 0 && player.ymotion < 15) {
                 player.ymotion += 2;
+                System.out.println("" + ticks +" "+ player.ymotion);
             }
             
             // if reach 500 ticks then level up speed * 1.2
@@ -90,8 +92,10 @@ public class Game implements Runnable {
             // stoppe player au niveau du sol en fonction de sa position
             if ((player.y >= Runner.HEIGHT - 160 || player.y < 0) && !player.crouched) {
                 player.y = Runner.HEIGHT - 160;
+//                System.out.println("HELLO160");
                 player.jumping = 0;
             } else if ((player.y >= Runner.HEIGHT - 140 || player.y < 0) && player.crouched) {
+            	//System.out.println("HELLO140");
                 player.y = Runner.HEIGHT - 140;
                 player.jumping = 0;
             }
@@ -156,6 +160,27 @@ public class Game implements Runnable {
                 System.out.println(Runner.state);
                 // si clic gauche
                 if (e.getButton() == 1) {
+                    player.jump();
+                    player.uncrouch();
+                } else if (player.jumping == 0) {
+                    player.crouch();
+                }
+                break;
+            case OVER:
+                System.out.println(Runner.state);
+                Runner.state = Runner.STATE.MENU;
+                Runner.renderer.repaint();
+                break;
+        }
+    }
+    
+    public void mousePressed(InputEvent e) {
+        System.out.println("clicked");
+        switch (Runner.state) {
+            case GAME:
+                System.out.println(Runner.state);
+                // si clic gauche
+                if (e.equals(InputEvent.BUTTON1_DOWN_MASK)) {
                     player.jump();
                     player.uncrouch();
                 } else if (player.jumping == 0) {

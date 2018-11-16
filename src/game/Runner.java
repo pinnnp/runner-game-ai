@@ -5,69 +5,78 @@ import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import javax.swing.*;
 
-
 import ai.*;
-
 
 //main class / game window / use to run the game
 public class Runner {
 
-    public static final int WIDTH = 1300, HEIGHT = 600;
-    public static Game game;
-    public static JFrame jframe;
-    public static Menu menu;
-    public static Renderer renderer;
-    public static STATE state = STATE.MENU;
-    public static Driver driver; //*
+	public static final int WIDTH = 1300, HEIGHT = 600;
+	public static Game game;
+	//public JFrame jframe = new JFrame();
+	public static Menu menu;
+	public static Renderer renderer;
+	public static STATE state = STATE.MENU;
+	public static Driver driver; // *
+	
 
-    public Runner() {
-    	
-    	
-        JFrame jframe = new JFrame();
-        renderer = new Renderer();
+	public Runner() {
 
-        //menu = new Menu();
+		JFrame jframe = new JFrame();
+		renderer = new Renderer();
 
-        jframe.add(renderer);
+		//menu = new Menu();
 
-        jframe.addMouseListener(new MouseInput());
+		jframe.add(renderer);
 
-        jframe.setTitle("Runner");
-        jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        jframe.setSize(WIDTH, HEIGHT);
-        jframe.setResizable(false);
-        jframe.setVisible(true);
-        
-        if (Runner.state == Runner.STATE.OVER) {
-        	jframe.dispatchEvent(new WindowEvent(jframe, WindowEvent.WINDOW_CLOSING));
-        }
-    }
+		jframe.addMouseListener(new MouseInput());
 
-    public static void start() {
-        game = new Game(); // nouvelle instance de Game crée à chaque nouveau démarrage
-        Thread t = new Thread(game);
-        t.start();
-    }
+		jframe.setTitle("Runner");
+		jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		jframe.setSize(WIDTH, HEIGHT);
+		jframe.setResizable(false);
+		jframe.setVisible(true);
 
-    public static void quit() {
-        System.exit(0);
-    }
+		Runnable t = new Runnable() {
+			public void run() {
+				while (true) {
+					if (Runner.state == Runner.STATE.OVER) {
+						jframe.dispatchEvent(new WindowEvent(jframe, WindowEvent.WINDOW_CLOSING));
+						return;
+					}
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						
+					}
+				}
+			}
+		};
+		
+		new Thread(t).start();
 
-    public static void main(String[] args) {
-        new Runner();
-    }
+	}
 
-    public enum STATE {
-        MENU,
-        GAME,
-        OVER
-    }
-    
-    public static void close(JFrame jframe) {
-    	
-        	jframe.dispatchEvent(new WindowEvent(jframe, WindowEvent.WINDOW_CLOSING));
-        
-    }
+	public static void start() {
+		game = new Game(); // nouvelle instance de Game crée à chaque nouveau démarrage
+		Thread t = new Thread(game);
+		t.start();
+	}
+
+	public static void quit() {
+		System.exit(0);
+	}
+
+	public static void main(String[] args) {
+		new Runner();
+	}
+
+	public enum STATE {
+		MENU, GAME, OVER
+	}
+
+	public static void close(JFrame jframe) {
+
+		jframe.dispatchEvent(new WindowEvent(jframe, WindowEvent.WINDOW_CLOSING));
+
+	}
 }
-
-
