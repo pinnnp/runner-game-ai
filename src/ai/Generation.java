@@ -13,14 +13,14 @@ import game.Runner;
 import game.Runner.STATE;
 
 public class Generation {
-	ArrayList<Genome> genomes = new ArrayList<Genome>();
-	ArrayList<Genome> bestGenomes = new ArrayList<Genome>();
+	ArrayList<OldGenome> genomes = new ArrayList<OldGenome>();
+	ArrayList<OldGenome> bestGenomes = new ArrayList<OldGenome>();
 	final static double MUTATION_RATE = 0.25;
 	final static int NUM_BEST_GENOMES = 30; // 1 generation has 30 best genomes out of 100 genomes.
 	public Robot robot;
 	public Generation() {
 		for (int i = 0; i < 100; i++) {
-			genomes.add(new Genome());
+			genomes.add(new OldGenome());
 		}
 	}
 	
@@ -43,10 +43,10 @@ public class Generation {
 		for (int i=0; i<20; i++) {genomes.add(mutation());}
 	}
 	
-	public Genome crossover() {
+	public OldGenome crossover() {
 		Random random = new Random();
-		Genome newGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
-		Genome otherGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
+		OldGenome newGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
+		OldGenome otherGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
 		int cutLocation = (int) (newGenome.getGenome().size() * Math.random());
 		for(int i = 0; i < cutLocation; i++) {
 			newGenome.getGenome().set(i, otherGenome.getGenome().get(i));
@@ -54,9 +54,9 @@ public class Generation {
 		return newGenome;
 	}
 	
-	public Genome mutation() {
+	public OldGenome mutation() {
 		Random random = new Random();
-		Genome newGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
+		OldGenome newGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
 		/*
 		if(Math.random() < MUTATION_RATE) {
 			newGenome.mutates(random.nextInt(3));
@@ -66,11 +66,11 @@ public class Generation {
 		return newGenome;
 	}
 	
-	public ArrayList<Genome> getBestGenomes() {
+	public ArrayList<OldGenome> getBestGenomes() {
 		return this.bestGenomes;
 	}
 	
-	public ArrayList<Genome> getGenomes() {
+	public ArrayList<OldGenome> getGenomes() {
 		return this.genomes;
 	}
 	
@@ -93,7 +93,7 @@ public class Generation {
 			inputs.add((double) Runner.game.pColumny);
 			inputs.add((double) Runner.game.pColumnh);
 			
-			for (Genome g : genomes) {
+			for (OldGenome g : genomes) {
 				if (g.get(0) > inputs.get(0)*90/100 && g.get(0) < inputs.get(0)*110/100) count++;
 				if (g.get(1) > inputs.get(1)*90/100 && g.get(1) < inputs.get(1)*110/100) count++;
 				if (g.get(2) == inputs.get(2)) count++;
