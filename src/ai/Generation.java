@@ -13,65 +13,64 @@ import game.Runner;
 import game.Runner.STATE;
 
 public class Generation {
-	ArrayList<OldGenome> genomes = new ArrayList<OldGenome>();
-	ArrayList<OldGenome> bestGenomes = new ArrayList<OldGenome>();
+	ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
+	ArrayList<Chromosome> bestChromosomes = new ArrayList<Chromosome>();
 	final static double MUTATION_RATE = 0.25;
-	final static int NUM_BEST_GENOMES = 30; // 1 generation has 30 best genomes out of 100 genomes.
+	final static int NUM_BEST_CHROMOSOMES = 30; // 1 generation has 30 best chromosomes out of 100 chromosomes.
 	public Robot robot;
 	public Generation() {
 		for (int i = 0; i < 100; i++) {
-			genomes.add(new OldGenome());
+			chromosomes.add(new Chromosome());
 		}
 	}
 	
 	//public execute
 	
 	public void keepBestGenomes() {
-		bestGenomes.clear();
-		genomes.sort(Collections.reverseOrder());
-		for (int i = 0; i < NUM_BEST_GENOMES; i++) {
-			bestGenomes.add(genomes.get(i));
+		bestChromosomes.clear();
+		chromosomes.sort(Collections.reverseOrder());
+		for (int i = 0; i < NUM_BEST_CHROMOSOMES; i++) {
+			bestChromosomes.add(chromosomes.get(i));
 		}
 	}
 	
 	public void nextGen() {
-		genomes.clear();
-		for (int i=0; i<bestGenomes.size(); i++) {
-			genomes.add(bestGenomes.get(i));
+		chromosomes.clear();
+		for (int i=0; i < NUM_BEST_CHROMOSOMES; i++) {
+			chromosomes.add(bestChromosomes.get(i));
 		}
-		for (int i=0; i<50; i++) {genomes.add(crossover());}
-		for (int i=0; i<20; i++) {genomes.add(mutation());}
+		for (int i=0; i<50; i++) {chromosomes.add(crossover());}
+		for (int i=0; i<20; i++) {chromosomes.add(mutation());}
 	}
 	
-	public OldGenome crossover() {
+	public Chromosome crossover() {
 		Random random = new Random();
-		OldGenome newGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
-		OldGenome otherGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
-		int cutLocation = (int) (newGenome.getGenome().size() * Math.random());
+		Chromosome newC = chromosomes.get(random.nextInt(NUM_BEST_CHROMOSOMES));
+		Chromosome otherC = chromosomes.get(random.nextInt(NUM_BEST_CHROMOSOMES));
+		int cutLocation = random.nextInt(newC.size());
 		for(int i = 0; i < cutLocation; i++) {
-			newGenome.getGenome().set(i, otherGenome.getGenome().get(i));
+			newC.getChromosome().set(i, otherC.getChromosome().get(i));
 		}
-		return newGenome;
+		return newC;
 	}
 	
-	public OldGenome mutation() {
+	public Chromosome mutation() {
 		Random random = new Random();
-		OldGenome newGenome = genomes.get(random.nextInt(NUM_BEST_GENOMES));
-		/*
-		if(Math.random() < MUTATION_RATE) {
-			newGenome.mutates(random.nextInt(3));
+		Chromosome newC = chromosomes.get(random.nextInt(NUM_BEST_CHROMOSOMES));
+		int numMu = random.nextInt((int) (MUTATION_RATE * 100));
+		for(; numMu>=0; numMu--) {
+			int muLocation = random.nextInt(newC.size());
+			newC.getChromosome().get(muLocation).mutates();
 		}
-		*/
-		newGenome.mutates(random.nextInt(3));
-		return newGenome;
+		return newC;
 	}
 	
-	public ArrayList<OldGenome> getBestGenomes() {
-		return this.bestGenomes;
+	public ArrayList<Chromosome> getBestGenomes() {
+		return this.bestChromosomes;
 	}
 	
-	public ArrayList<OldGenome> getGenomes() {
-		return this.genomes;
+	public ArrayList<Chromosome> getGenomes() {
+		return this.chromosomes;
 	}
 	
 	public void execute() {
@@ -93,7 +92,8 @@ public class Generation {
 			inputs.add((double) Runner.game.pColumny);
 			inputs.add((double) Runner.game.pColumnh);
 			
-			for (OldGenome g : genomes) {
+			//TODO - EDIT THIS PART!!!!
+			for (Chromosome g : chromosomes) {
 				if (g.get(0) > inputs.get(0)*90/100 && g.get(0) < inputs.get(0)*110/100) count++;
 				if (g.get(1) > inputs.get(1)*90/100 && g.get(1) < inputs.get(1)*110/100) count++;
 				if (g.get(2) == inputs.get(2)) count++;

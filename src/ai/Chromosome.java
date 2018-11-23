@@ -5,13 +5,17 @@ import java.util.Random;
 
 import game.Runner;
 
-public class Chromosome {
+public class Chromosome implements Comparable<Object>{
 	private ArrayList<Genome> chromosome;
+	private int fitness = 0;
 	private int mSize;
 	public Chromosome() {
 		mSize = 0;
 		//INITIALIZE SPEED [0-500]
 		Genome g = new Genome();
+		Random random = new Random(); 
+		int a = random.nextInt(3);
+		g.setAction(a);
 		//DETERMINE RANGE OF X
 		for (int x = 0; x < Runner.WIDTH; x += 50) {
 			//ADD SPEED TO INDEX 0 and SPEED + 10 to 1 of Genome "g"
@@ -24,7 +28,6 @@ public class Chromosome {
 			g.setGenome(3, x + 50); //CAN be more than the Runner.WIDTH (SCREEN)
 			
 			//ADD COLUMNY TO INDEX 4 and COLUMNY - 10 to 5 of Genome "g"
-			Random random = new Random(); 
 			double hole = random.nextBoolean() ? 20.0 : 0.0;
 			int height = 10 + random.nextInt(120);
 			double rHeight = Runner.HEIGHT - height - 120 - hole;
@@ -32,15 +35,24 @@ public class Chromosome {
 			g.setGenome(5, rHeight - 10);
 			
 			//ADD HEIGHT TO INDEX 6 and HEIGHT + 10 to 7 of Genome "g"
-			g.setGenome(6, height);
-			g.setGenome(7, height + 10);
-			
-			int a = random.nextInt(3);
-			g.setAction(a);
+			g.setGenome(6, (double) height);
+			g.setGenome(7, (double) (height + 10));
 		}
 		chromosome.add(g);
 		mSize++;
 		
+	}
+	
+	public ArrayList<Genome> getChromosome(){
+		return chromosome;
+	}
+	
+	public void setFitness(int f) {
+		fitness = f;
+	}
+	
+	public int getFitness() {
+		return fitness;
 	}
 	
 	public int size() {
@@ -52,6 +64,20 @@ public class Chromosome {
 			throw new IllegalArgumentException("max must be greater than min");
 		}
 		return (double) Math.random() * max + min;
+	}
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		Chromosome c = (Chromosome) o;
+		int result;
+		if (this.fitness < c.fitness) {
+			result = -1;		
+		}else if (this.fitness == c.fitness) {
+			result = 0;
+		}else {
+			result = 1;
+		}
+		return result;
 	}
 	
 }
