@@ -34,6 +34,9 @@ public class Chromosome {
 			//ADD HEIGHT TO INDEX 6 and HEIGHT + 10 to 7 of Genome "g"
 			g.setGenome(6, height);
 			g.setGenome(7, height + 10);
+			
+			int a = random.nextInt(3);
+			g.setAction(a);
 		}
 		chromosome.add(g);
 		mSize++;
