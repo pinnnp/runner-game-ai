@@ -93,7 +93,11 @@ public class Generation {
 			inputs.add((double) Runner.game.pColumnh);
 			
 			//TODO - EDIT THIS PART!!!!
-			for (Chromosome g : chromosomes) {
+			for (Chromosome c : chromosomes) {
+				for (Genome g : c.getChromosome()) {
+					if (g.get(0) )
+					
+				}
 				if (g.get(0) > inputs.get(0)*90/100 && g.get(0) < inputs.get(0)*110/100) count++;
 				if (g.get(1) > inputs.get(1)*90/100 && g.get(1) < inputs.get(1)*110/100) count++;
 				if (g.get(2) == inputs.get(2)) count++;

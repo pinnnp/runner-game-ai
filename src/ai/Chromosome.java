@@ -12,12 +12,14 @@ public class Chromosome implements Comparable<Object>{
 	public Chromosome() {
 		mSize = 0;
 		//INITIALIZE SPEED [0-500]
-		Genome g = new Genome();
+		
 		Random random = new Random(); 
-		int a = random.nextInt(3);
-		g.setAction(a);
+		
 		//DETERMINE RANGE OF X
 		for (int x = 0; x < Runner.WIDTH; x += 50) {
+			Genome g = new Genome();
+			int a = random.nextInt(3);
+			g.setAction(a);
 			//ADD SPEED TO INDEX 0 and SPEED + 10 to 1 of Genome "g"
 			double speed = getRandomNumberInRange(10.0, 500.0);
 			g.setGenome(0, speed);
@@ -37,9 +39,11 @@ public class Chromosome implements Comparable<Object>{
 			//ADD HEIGHT TO INDEX 6 and HEIGHT + 10 to 7 of Genome "g"
 			g.setGenome(6, (double) height);
 			g.setGenome(7, (double) (height + 10));
+			
+			chromosome.add(g);
+			mSize++;
 		}
-		chromosome.add(g);
-		mSize++;
+		
 		
 	}
 	
