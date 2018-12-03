@@ -45,11 +45,16 @@ public class Generation {
 	
 	public Chromosome crossover() {
 		Random random = new Random();
-		Chromosome newC = chromosomes.get(random.nextInt(NUM_BEST_CHROMOSOMES));
-		Chromosome otherC = chromosomes.get(random.nextInt(NUM_BEST_CHROMOSOMES));
+		int numNew = random.nextInt(NUM_BEST_CHROMOSOMES);
+		int numOth = random.nextInt(NUM_BEST_CHROMOSOMES);
+		while(numNew == numOth) {
+			numOth = random.nextInt(NUM_BEST_CHROMOSOMES);
+		}
+		Chromosome newC = chromosomes.get(numNew);
+		Chromosome otherC = chromosomes.get(numOth);
 		int cutLocation = random.nextInt(newC.size());
 		for(int i = 0; i < cutLocation; i++) {
-			newC.getChromosome().set(i, otherC.getChromosome().get(i));
+			newC.getChromosome().get(i).setAction(otherC.getChromosome().get(i).act());;
 		}
 		return newC;
 	}

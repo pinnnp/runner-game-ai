@@ -57,16 +57,16 @@ public class Game implements Runnable {
                 
             }
             
-            Rectangle column = c.columns.get(minIndex);
-            pColumnx = column.x;
-            pColumny = column.y;
-            pColumnh = column.height;
+            Rectangle columni = c.columns.get(minIndex);
+            pColumnx = columni.x;
+            pColumny = columni.y;
+            pColumnh = columni.height;
             hasHole = Runner.HEIGHT - pColumnh - 120 - pColumny == 20 ? true : false;
             //System.out.println(Runner.HEIGHT - pColumnh - 120 - pColumny + " :DEGUB");
 
             if (ticks % 2 == 0 && player.ymotion < 15) {
                 player.ymotion += 2;
-                System.out.println("" + ticks +" "+ player.ymotion);
+                //System.out.println("" + ticks + " " + player.ymotion);
             }
             
             // if reach 500 ticks then level up speed * 1.2
@@ -77,13 +77,13 @@ public class Game implements Runnable {
             }
             
             for (int i = 0; i < c.columns.size(); i++) {
-                Rectangle column = c.columns.get(i);
+                Rectangle column1 = c.columns.get(i);
 
-                if (column.x + column.width < 0) {
-                    c.columns.remove(column);
+                if (column1.x + column1.width < 0) {
+                    c.columns.remove(column1);
                     c.addColumn(1);
 
-                    if (column.y == 0) {
+                    if (column1.y == 0) {
                         c.addColumn(1);
                     }
                 }
