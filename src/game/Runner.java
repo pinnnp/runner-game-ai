@@ -24,7 +24,7 @@ public class Runner {
 		JFrame jframe = new JFrame();
 		renderer = new Renderer();
 
-		//menu = new Menu();
+		menu = new Menu();
 
 		jframe.add(renderer);
 

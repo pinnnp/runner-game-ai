@@ -24,7 +24,9 @@ public class Game implements Runnable {
     public int pColumnx;
     public int pColumny;
     public int pColumnh;
-
+    public boolean hasHole = false;
+    private int minX = 0;
+    private int minIndex;
     public Game() {
 
         c = new Controller();
@@ -48,10 +50,19 @@ public class Game implements Runnable {
             for (int i = 0; i < c.columns.size(); i++) {
                 Rectangle column = c.columns.get(i);
                 column.x -= speed;
-                pColumnx = column.x;
-                pColumny = column.y;
-                pColumnh = column.height;
+                if(column.x > player.x) {
+                	if (minX == 0) {minX = column.x; minIndex = i;}
+                	else if (minX > column.x) {minX = column.x; minIndex = i;}
+                }
+                
             }
+            
+            Rectangle column = c.columns.get(minIndex);
+            pColumnx = column.x;
+            pColumny = column.y;
+            pColumnh = column.height;
+            hasHole = Runner.HEIGHT - pColumnh - 120 - pColumny == 20 ? true : false;
+            //System.out.println(Runner.HEIGHT - pColumnh - 120 - pColumny + " :DEGUB");
 
             if (ticks % 2 == 0 && player.ymotion < 15) {
                 player.ymotion += 2;
