@@ -8,7 +8,7 @@ import game.Runner;
 
 public class Chromosome implements Comparable<Object>{
 	private ArrayList<Genome> chromosome;
-	private int fitness = 0;
+	private double fitness = 0;
 	public Chromosome() {
 		//INITIALIZE SPEED [0-500]
 		
@@ -37,11 +37,11 @@ public class Chromosome implements Comparable<Object>{
 		return chromosome;
 	}
 	
-	public void setFitness(int f) {
+	public void setFitness(double f) {
 		fitness = f;
 	}
 	
-	public int getFitness() {
+	public double getFitness() {
 		return fitness;
 	}
 	public int size() {

@@ -9,7 +9,7 @@ public class Genome {
 	private ArrayList<Double> genome;
 	private int action = 0;
 	public Genome() {
-		genome = new ArrayList<Double>();
+		genome = new ArrayList<Double>(5);
 	}
 	
 	public void setGenome(int index, double value) {
