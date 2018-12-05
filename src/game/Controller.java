@@ -10,6 +10,7 @@ public class Controller {
     
     public ArrayList<Rectangle> columns = new ArrayList<>();
     public Random random = new Random();
+    public int hole;
     
     public Controller() {
     }
@@ -22,7 +23,7 @@ public class Controller {
         int rWidth = 10;
         
         // une chance sur deux d'obtenir un trou sous la colonne
-        int hole = random.nextBoolean() ? 20 : 0;
+        hole = random.nextBoolean() ? 20 : 0;
         
         switch (level) {
             case 0:
@@ -54,5 +55,10 @@ public class Controller {
     public void paintColumn(Graphics g, Rectangle column) {
         g.setColor(Color.yellow.darker());
         g.fillRect(column.x, column.y, column.width, column.height);
+    }
+    
+    public int haveHole() {
+    	if (hole == 0) return 0;
+    	else return 1;
     }
 }

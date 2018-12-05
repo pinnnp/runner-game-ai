@@ -90,53 +90,54 @@ public class Generation {
 		Runner.start();
 		int count = 0;
 		while (Runner.state != STATE.OVER) {
-			
-			ArrayList<Double> inputs = new ArrayList<Double>();
-			inputs.add((double) Runner.game.pSpeed);
-			inputs.add((double) Runner.game.pColumnx);
-			inputs.add((double) Runner.game.pColumny);
-			inputs.add((double) Runner.game.pColumnh);
-			
-			//TODO - EDIT THIS PART!!!!
 			for (Chromosome c : chromosomes) {
+				
+				ArrayList<Double> inputs = new ArrayList<Double>();
+				inputs.add((double) Runner.game.pSpeed);
+				inputs.add((double) Runner.game.pColumnx);
+				inputs.add((double) Runner.game.c.haveHole());
+			
+				//TODO - EDIT THIS PART!!!!
+			
 				for (Genome g : c.getChromosome()) {
-					if (g.get(0) )
+					if (inputs.get(0)>=g.get(0) && inputs.get(0)<=g.get(1)) count++;
+					if (inputs.get(1)>=g.get(2) && inputs.get(1)<=g.get(3)) count++;
+					if (inputs.get(2)==g.get(4)) count++;
 					
-				}
-				if (g.get(0) > inputs.get(0)*90/100 && g.get(0) < inputs.get(0)*110/100) count++;
-				if (g.get(1) > inputs.get(1)*90/100 && g.get(1) < inputs.get(1)*110/100) count++;
-				if (g.get(2) == inputs.get(2)) count++;
-				if (g.get(3) > inputs.get(3)*90/100 && g.get(3) < inputs.get(3)*110/100) count++;
-				if (count >2) {
-					//System.out.println(count);
-					//System.out.println(Runner.game.player.y);
-					if (g.act() == 0) { /*System.out.println("Do nothing"); */  count = 0; }
-					if (g.act() == 1) {
-						//robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-						if(Runner.game.player.jumping < 2) {
-							Runner.game.player.jump();
-							Runner.game.player.uncrouch();
+					if (count >2) {
+						//System.out.println(count);
+						//System.out.println(Runner.game.player.y);
+						if (g.act() == 0) { /*System.out.println("Do nothing"); */  count = 0; }
+						if (g.act() == 1) {
+							//robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+							if (inputs.get(2)==1) {}
+							else if(Runner.game.player.jumping < 2) {
+								Runner.game.player.jump();
+								Runner.game.player.uncrouch();
+								}
+							if (Runner.state != STATE.OVER) {
+								c.setFitness(c.getFitness()+0.0000001);
 							}
-						if (Runner.state != STATE.OVER) {
-							g.setFitness(g.getFitness()+0.0000001);
+							 count = 0;
 						}
-						 count = 0;
-					}
-					if (g.act() == 2) {
-						if (Runner.game.player.jumping == 0) {
-							Runner.game.player.crouch();
+						if (g.act() == 2) {
+							if (Runner.game.player.jumping == 0) {
+								Runner.game.player.crouch();
+							}
+							if (Runner.state != STATE.OVER) {
+								c.setFitness(c.getFitness()+0.0000001);
+							}
+							 count = 0;
 						}
-						if (Runner.state != STATE.OVER) {
-							g.setFitness(g.getFitness()+0.0000001);
+						if (Runner.state == Runner.STATE.OVER) {
+							//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
+							System.out.println("Genome ended."+" Fitness: "+c.getFitness());
 						}
-						 count = 0;
+						break;
 					}
-					if (Runner.state == Runner.STATE.OVER) {
-						//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
-						System.out.println("Genome ended."+" Fitness: "+g.getFitness());
-					}
-					break;
 				}
+				
+			
 			} 
 		} 
 	}
