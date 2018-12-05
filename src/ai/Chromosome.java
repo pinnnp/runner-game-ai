@@ -11,7 +11,7 @@ public class Chromosome implements Comparable<Object>{
 	private double fitness = 0;
 	public Chromosome() {
 		//INITIALIZE SPEED [0-500]
-		
+		chromosome = new ArrayList<Genome>();
 		Random random = new Random(); 
 		
 		//DETERMINE RANGE OF X

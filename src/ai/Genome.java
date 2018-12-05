@@ -13,7 +13,7 @@ public class Genome {
 	}
 	
 	public void setGenome(int index, double value) {
-		genome.set(index, value);
+		genome.add(value);
 	}
 	
 	public void setAction(int n) {
