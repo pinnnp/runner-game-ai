@@ -29,26 +29,10 @@ public class Genome {
 	}
 	
 	public void mutates() {
-		Random r = new Random();
-		int id = r.nextInt(genome.size());
-		while (id == 2 || id == 3) id = r.nextInt(genome.size());
-		if (id == 0 || id == 1) {
-			double speed = getRandomNumberInRange(10.0, 500.0);
-			genome.set(0, speed);
-			genome.set(1, speed + 10);
-		}
-		else if (id == 4 || id == 5) {
-			double hole = r.nextBoolean() ? 20.0 : 0.0;
-			int height = 10 + r.nextInt(120);
-			double rHeight = Runner.HEIGHT - height - 120 - hole;
-			genome.set(4, rHeight);
-			genome.set(5, rHeight - 10);
-		}
-		else if (id == 6 || id == 7) {
-			int height = 10 + r.nextInt(120);
-			genome.set(6, (double) height);
-			genome.set(7, (double) (height + 10));
-		}
+		Random random = new Random();
+		int a = random.nextInt(3);
+		while (a == act()) a = random.nextInt(3);
+		setAction(a);
 	}
 	
 	private static double getRandomNumberInRange(double min, double max) {
