@@ -79,18 +79,20 @@ public class Generation {
 	}
 	
 	public void execute() {
-		new Runner();
-		try {
-			robot = new Robot();
-		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Runner.state = STATE.GAME;
-		Runner.start();
-		int count = 0;
-		while (Runner.state != STATE.OVER) {
-			for (Chromosome c : chromosomes) {
+		
+		for (Chromosome c : chromosomes) {
+			new Runner();
+			try {
+				robot = new Robot();
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Runner.state = STATE.GAME;
+			Runner.start();
+			int count = 0;
+			while (Runner.state != STATE.OVER) {
+			
 				
 				ArrayList<Double> inputs = new ArrayList<Double>();
 				inputs.add((double) Runner.game.pSpeed);
@@ -131,7 +133,7 @@ public class Generation {
 						}
 						if (Runner.state == Runner.STATE.OVER) {
 							//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
-							System.out.println("Genome ended."+" Fitness: "+c.getFitness());
+							System.out.println("Chromosome ended."+" Fitness: "+c.getFitness());
 						}
 						break;
 					}
