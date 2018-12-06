@@ -15,7 +15,7 @@ public class Chromosome implements Comparable<Object>{
 		Random random = new Random(); 
 		
 		//DETERMINE RANGE OF X
-		for (int x = 0; x < Runner.WIDTH; x += 10) {
+		for (int x = 0; x < Runner.WIDTH; x += 5) {
 			//ADD SPEED TO INDEX 0 and SPEED + 10 to 1 of Genome "g"
 			for(int speed = 10; speed < 501; speed = (int) round(speed * 1.2)) {
 				for (int i = 0; i < 2; i++) {
@@ -25,7 +25,7 @@ public class Chromosome implements Comparable<Object>{
 					g.setGenome(0, speed);
 					g.setGenome(1, (int) round(speed * 1.2));
 					g.setGenome(2, x);
-					g.setGenome(3, x + 10);
+					g.setGenome(3, x + 5);
 					g.setGenome(4, i);
 					chromosome.add(g);
 				}

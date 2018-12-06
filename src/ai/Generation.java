@@ -15,7 +15,7 @@ import game.Runner.STATE;
 public class Generation {
 	ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
 	ArrayList<Chromosome> bestChromosomes = new ArrayList<Chromosome>();
-	final static double MUTATION_RATE = 0.25;
+	final static double MUTATION_RATE = 0.05;
 	final static int NUM_BEST_CHROMOSOMES = 30; // 1 generation has 30 best chromosomes out of 100 chromosomes.
 	public Robot robot;
 	public Generation() {
@@ -81,6 +81,7 @@ public class Generation {
 	public void execute() {
 		int cNum = 0;
 		for (Chromosome c : chromosomes) {
+			c.setFitness(0);
 			cNum++;
 			new Runner();
 			Runner.state = STATE.GAME;
@@ -104,10 +105,15 @@ public class Generation {
 					if (count >2) {
 						//System.out.println(count);
 						//System.out.println(Runner.game.player.y);
-						if (g.act() == 0) { /*System.out.println("Do nothing"); */  count = 0; }
-						if (g.act() == 1) {
+						if (g.act() == 0) { /*System.out.println("Do nothing"); */  
+							count = 0;
+							if (Runner.state != STATE.OVER) {
+								c.setFitness(c.getFitness()+1);
+							} 
+						}
+						else if (g.act() == 1) {
 							//robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-							Runner.game.mousePressed(1);
+							if(Runner.game.player.jumping < 3) Runner.game.mousePressed(1);
 							try {
 								Thread.sleep(300);
 							} catch (InterruptedException e) {
@@ -119,11 +125,11 @@ public class Generation {
 //								Runner.game.player.uncrouch();
 //								}
 							if (Runner.state != STATE.OVER) {
-								c.setFitness(c.getFitness()+0.0000001);
+								c.setFitness(c.getFitness()+1);
 							}
 							 count = 0;
 						}
-						if (g.act() == 2) {
+						else if (g.act() == 2) {
 							Runner.game.mousePressed(2);
 							try {
 								Thread.sleep(300);
@@ -135,16 +141,17 @@ public class Generation {
 //								Runner.game.player.crouch();
 //							}
 							if (Runner.state != STATE.OVER) {
-								c.setFitness(c.getFitness()+0.0000001);
+								c.setFitness(c.getFitness()+1);
 							}
 							 count = 0;
 						}
 						if (Runner.state == Runner.STATE.OVER) {
 							//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
 							System.out.println("Chromosome " +cNum+ " ended."+" Fitness: "+c.getFitness());
+							break;
 						}
-						break;
-					}
+					}else continue;
+					
 				}
 				
 			
