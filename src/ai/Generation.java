@@ -112,20 +112,33 @@ public class Generation {
 						if (g.act() == 0) { /*System.out.println("Do nothing"); */  count = 0; }
 						if (g.act() == 1) {
 							//robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-							if (inputs.get(2)==1) {}
-							else if(Runner.game.player.jumping < 2) {
-								Runner.game.player.jump();
-								Runner.game.player.uncrouch();
-								}
+							Runner.game.mousePressed(1);
+							try {
+								Thread.sleep(300);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+//							if(Runner.game.player.jumping < 2) {
+//								Runner.game.player.jump();
+//								Runner.game.player.uncrouch();
+//								}
 							if (Runner.state != STATE.OVER) {
 								c.setFitness(c.getFitness()+0.0000001);
 							}
 							 count = 0;
 						}
 						if (g.act() == 2) {
-							if (Runner.game.player.jumping == 0) {
-								Runner.game.player.crouch();
+							Runner.game.mousePressed(2);
+							try {
+								Thread.sleep(300);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
+//							if (Runner.game.player.jumping == 0) {
+//								Runner.game.player.crouch();
+//							}
 							if (Runner.state != STATE.OVER) {
 								c.setFitness(c.getFitness()+0.0000001);
 							}

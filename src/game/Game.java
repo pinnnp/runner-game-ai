@@ -185,6 +185,27 @@ public class Game implements Runnable {
         }
     }
     
+    public void mousePressed(int i) {
+        System.out.println("clicked");
+        switch (Runner.state) {
+            case GAME:
+                System.out.println(Runner.state);
+                // si clic gauche
+                if (i == 1) {
+                    player.jump();
+                    player.uncrouch();
+                } else if (player.jumping == 0) {
+                    player.crouch();
+                }
+                break;
+//            case OVER:
+//                System.out.println(Runner.state);
+//                Runner.state = Runner.STATE.MENU;
+//                Runner.renderer.repaint();
+//                break;
+        }
+    }
+    
     public void mousePressed(InputEvent e) {
         System.out.println("clicked");
         switch (Runner.state) {

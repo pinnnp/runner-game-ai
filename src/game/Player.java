@@ -15,7 +15,7 @@ public class Player extends Rectangle {
 
     // fait sauter player
     public void jump() {
-
+    	System.out.println(jumping);
         if (ymotion > 0) {
             ymotion = 0;
         }
