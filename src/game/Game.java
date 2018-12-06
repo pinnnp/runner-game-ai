@@ -186,10 +186,10 @@ public class Game implements Runnable {
     }
     
     public void mousePressed(int i) {
-        System.out.println("clicked");
+        //System.out.println("clicked");
         switch (Runner.state) {
             case GAME:
-                System.out.println(Runner.state);
+                //System.out.println(Runner.state);
                 // si clic gauche
                 if (i == 1) {
                     player.jump();

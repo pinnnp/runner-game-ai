@@ -25,7 +25,7 @@ class HighScore {
 
                 currentHighScore = Integer.parseInt(line.trim());
                 reader.close();
-                System.out.println(currentHighScore);
+                //System.out.println(currentHighScore);
             } catch (IOException ex) {
                 System.err.println("ERROR reading scores from file");
             }

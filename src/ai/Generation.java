@@ -79,15 +79,10 @@ public class Generation {
 	}
 	
 	public void execute() {
-		
+		int cNum = 0;
 		for (Chromosome c : chromosomes) {
+			cNum++;
 			new Runner();
-			try {
-				robot = new Robot();
-			} catch (AWTException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			Runner.state = STATE.GAME;
 			Runner.start();
 			int count = 0;
@@ -146,7 +141,7 @@ public class Generation {
 						}
 						if (Runner.state == Runner.STATE.OVER) {
 							//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
-							System.out.println("Chromosome ended."+" Fitness: "+c.getFitness());
+							System.out.println("Chromosome " +cNum+ " ended."+" Fitness: "+c.getFitness());
 						}
 						break;
 					}
