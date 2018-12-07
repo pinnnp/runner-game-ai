@@ -5,6 +5,9 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import static java.lang.Math.round;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,11 +23,12 @@ public class Game implements Runnable {
     private int score;
     private int level = 0;
     
-    public int pSpeed = 10;
-    public int pColumnx;
-    public int pColumny;
-    public int pColumnh;
-    public boolean hasHole = false;
+    public static ArrayList<Integer> in = new ArrayList<>();
+    public static int pSpeed = 10;
+    public static int pColumnx;
+    public static int pColumny;
+    public static int pColumnh;
+    public static int hasHole = 0;
     private int minX = 0;
     private int minIndex;
     public Game() {
@@ -32,7 +36,7 @@ public class Game implements Runnable {
         c = new Controller();
         player = new Player(Runner.WIDTH / 3, Runner.HEIGHT / 2, 20, 40);
         score = 0;
-        
+        in = new ArrayList<Integer>(Arrays.asList(10,pColumnx,hasHole));
         //add level from Controller that is obstacle class
         for (int i = 0; i < 5; i++) {
             c.addColumn(0);
@@ -61,9 +65,15 @@ public class Game implements Runnable {
             pColumnx = columni.x;
             pColumny = columni.y;
             pColumnh = columni.height;
-            hasHole = Runner.HEIGHT - pColumnh - 120 - pColumny == 20 ? true : false;
+            hasHole = Runner.HEIGHT - pColumnh - 120 - pColumny == 20 ? 1 : 0;
+            in = new ArrayList<Integer>();
+            in.add(speed); in.add(pColumnx); in.add(hasHole);
+            
+            //System.out.println(in.get(0)+" "+in.get(1)+" "+in.get(2));
+            //System.out.println(speed+" "+pColumnx+" "+hasHole);
             //System.out.println(Runner.HEIGHT - pColumnh - 120 - pColumny + " :DEGUB");
-
+            
+            
             if (ticks % 2 == 0 && player.ymotion < 15) {
                 player.ymotion += 2;
                 //System.out.println("" + ticks + " " + player.ymotion);

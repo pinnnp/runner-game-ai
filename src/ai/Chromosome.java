@@ -42,7 +42,7 @@ public class Chromosome implements Comparable<Object>{
 	}
 	
 	public double getFitness() {
-		return fitness;
+		return this.fitness;
 	}
 	public int size() {
 		return chromosome.size();

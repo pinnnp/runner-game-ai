@@ -70,11 +70,11 @@ public class Generation {
 		return newC;
 	}
 	
-	public ArrayList<Chromosome> getBestGenomes() {
+	public ArrayList<Chromosome> getBestChromosomes() {
 		return this.bestChromosomes;
 	}
 	
-	public ArrayList<Chromosome> getGenomes() {
+	public ArrayList<Chromosome> getChromosomes() {
 		return this.chromosomes;
 	}
 	
@@ -89,20 +89,24 @@ public class Generation {
 			int count = 0;
 			while (Runner.state != STATE.OVER) {
 			
-				
 				ArrayList<Double> inputs = new ArrayList<Double>();
-				inputs.add((double) Runner.game.pSpeed);
-				inputs.add((double) Runner.game.pColumnx);
-				inputs.add((double) Runner.game.c.haveHole());
-			
+				inputs.add((double) Runner.game.in.get(0));
+				inputs.add((double) Runner.game.in.get(1));
+				inputs.add((double) Runner.game.in.get(2));
 				//TODO - EDIT THIS PART!!!!
 			
 				for (Genome g : c.getChromosome()) {
+					/*ArrayList<Double> inputs = new ArrayList<Double>();
+					inputs.add((double) Runner.game.in.get(0));
+					inputs.add((double) Runner.game.in.get(1));
+					inputs.add((double) Runner.game.in.get(2));*/
+					System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
 					if (inputs.get(0)>=g.get(0) && inputs.get(0)<=g.get(1)) count++;
 					if (inputs.get(1)>=g.get(2) && inputs.get(1)<=g.get(3)) count++;
 					if (inputs.get(2)==g.get(4)) count++;
 					
-					if (count >2) {
+					if (count==3) {
+						System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
 						//System.out.println(count);
 						//System.out.println(Runner.game.player.y);
 						if (g.act() == 0) { /*System.out.println("Do nothing"); */  

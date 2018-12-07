@@ -11,9 +11,8 @@ public class Driver {
 		int genNum=0;
 		System.out.println("Generation #0 started");
 		generation.execute();
-		//runGenomes(generation);
 		generation.keepBestGenomes();
-		System.out.println("Generation #0 ended"+" Fittest: "+generation.getBestGenomes().get(0).getFitness());
+		System.out.println("Generation #0 ended"+" Fittest: "+generation.getBestChromosomes().get(0).getFitness());
 		System.out.println("----------------------------------------------------------");
 		while (true) {
 			genNum++;
@@ -23,7 +22,7 @@ public class Driver {
 			generation.execute();
 			//runGenomes(generation);
 			generation.keepBestGenomes();
-			System.out.println("Generation #"+genNum+" ended"+" Fittest: "+generation.getBestGenomes().get(0).getFitness());
+			System.out.println("Generation #"+genNum+" ended"+" Fittest: "+generation.getBestChromosomes().get(0).getFitness());
 			System.out.println("----------------------------------------------------------");
 			//                                                                                    
 		}
