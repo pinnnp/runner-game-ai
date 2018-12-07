@@ -32,7 +32,7 @@ public class Game implements Runnable {
     private int minX = 0;
     private int minIndex;
     public Game() {
-
+    	in = new ArrayList<Integer>();
         c = new Controller();
         player = new Player(Runner.WIDTH / 3, Runner.HEIGHT / 2, 20, 40);
         score = 0;
@@ -60,16 +60,17 @@ public class Game implements Runnable {
                 }
                 
             }
-            
+            minX = 0;
             Rectangle columni = c.columns.get(minIndex);
             pColumnx = columni.x;
             pColumny = columni.y;
             pColumnh = columni.height;
             hasHole = Runner.HEIGHT - pColumnh - 120 - pColumny == 20 ? 1 : 0;
-            in = new ArrayList<Integer>();
-            in.add(speed); in.add(pColumnx); in.add(hasHole);
             
-            //System.out.println(in.get(0)+" "+in.get(1)+" "+in.get(2));
+            in.clear();
+            in.add(speed); in.add(columni.x); in.add(hasHole);
+            
+            System.out.println(in.get(0)+" "+in.get(1)+" "+in.get(2));
             //System.out.println(speed+" "+pColumnx+" "+hasHole);
             //System.out.println(Runner.HEIGHT - pColumnh - 120 - pColumny + " :DEGUB");
             

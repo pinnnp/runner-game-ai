@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+import game.Game;
 import game.Runner;
 import game.Runner.STATE;
 
@@ -90,9 +91,10 @@ public class Generation {
 			while (Runner.state != STATE.OVER) {
 			
 				ArrayList<Double> inputs = new ArrayList<Double>();
-				inputs.add((double) Runner.game.in.get(0));
-				inputs.add((double) Runner.game.in.get(1));
-				inputs.add((double) Runner.game.in.get(2));
+				inputs.add((double) Game.in.get(0));
+				inputs.add((double) Game.in.get(1));
+				inputs.add((double) Game.in.get(2));
+				System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
 				//TODO - EDIT THIS PART!!!!
 			
 				for (Genome g : c.getChromosome()) {
@@ -100,7 +102,7 @@ public class Generation {
 					inputs.add((double) Runner.game.in.get(0));
 					inputs.add((double) Runner.game.in.get(1));
 					inputs.add((double) Runner.game.in.get(2));*/
-					System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
+					count = 0;
 					if (inputs.get(0)>=g.get(0) && inputs.get(0)<=g.get(1)) count++;
 					if (inputs.get(1)>=g.get(2) && inputs.get(1)<=g.get(3)) count++;
 					if (inputs.get(2)==g.get(4)) count++;
