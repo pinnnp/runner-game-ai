@@ -91,10 +91,12 @@ public class Generation {
 			while (Runner.state != STATE.OVER) {
 			
 				ArrayList<Double> inputs = new ArrayList<Double>();
+				if (Game.in.size()==3) {
 				inputs.add((double) Game.in.get(0));
 				inputs.add((double) Game.in.get(1));
-				inputs.add((double) Game.in.get(2));
-				System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
+				inputs.add((double) Game.in.get(2));}
+				else {inputs.add((double) 0); inputs.add((double) 0); inputs.add((double) 0);}
+				//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
 				//TODO - EDIT THIS PART!!!!
 			
 				for (Genome g : c.getChromosome()) {
@@ -108,7 +110,7 @@ public class Generation {
 					if (inputs.get(2)==g.get(4)) count++;
 					
 					if (count==3) {
-						System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
+						//System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
 						//System.out.println(count);
 						//System.out.println(Runner.game.player.y);
 						if (g.act() == 0) { /*System.out.println("Do nothing"); */  

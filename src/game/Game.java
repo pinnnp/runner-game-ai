@@ -70,7 +70,7 @@ public class Game implements Runnable {
             in.clear();
             in.add(speed); in.add(columni.x); in.add(hasHole);
             
-            System.out.println(in.get(0)+" "+in.get(1)+" "+in.get(2));
+            //System.out.println(in.get(0)+" "+in.get(1)+" "+in.get(2));
             //System.out.println(speed+" "+pColumnx+" "+hasHole);
             //System.out.println(Runner.HEIGHT - pColumnh - 120 - pColumny + " :DEGUB");
             
