@@ -30,6 +30,7 @@ public class Generation {
 	public void keepBestGenomes() {
 		bestChromosomes.clear();
 		chromosomes.sort(Collections.reverseOrder());
+		System.out.println(chromosomes.get(0).getFitness());
 		for (int i = 0; i < NUM_BEST_CHROMOSOMES; i++) {
 			bestChromosomes.add(chromosomes.get(i));
 		}
@@ -91,33 +92,30 @@ public class Generation {
 			while (Runner.state != STATE.OVER) {
 			
 				ArrayList<Double> inputs = new ArrayList<Double>();
-				if (Game.in.size()==3) {
-				inputs.add((double) Game.in.get(0));
-				inputs.add((double) Game.in.get(1));
-				inputs.add((double) Game.in.get(2));}
-				else {inputs.add((double) 0); inputs.add((double) 0); inputs.add((double) 0);}
+				
+				inputs.add((double) Game.speed);
+				inputs.add((double) Game.pColumnx);
+				inputs.add((double) Game.hasHole);
 				//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
 				//TODO - EDIT THIS PART!!!!
 			
 				for (Genome g : c.getChromosome()) {
-					/*ArrayList<Double> inputs = new ArrayList<Double>();
-					inputs.add((double) Runner.game.in.get(0));
-					inputs.add((double) Runner.game.in.get(1));
-					inputs.add((double) Runner.game.in.get(2));*/
+				
 					count = 0;
-					if (inputs.get(0)>=g.get(0) && inputs.get(0)<=g.get(1)) count++;
-					if (inputs.get(1)>=g.get(2) && inputs.get(1)<=g.get(3)) count++;
+					if (inputs.get(0)>=g.get(0) && inputs.get(0)<g.get(1)) count++;
+					if (inputs.get(1)>=g.get(2) && inputs.get(1)<g.get(3)) count++;
 					if (inputs.get(2)==g.get(4)) count++;
 					
 					if (count==3) {
+						//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
 						//System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
 						//System.out.println(count);
 						//System.out.println(Runner.game.player.y);
 						if (g.act() == 0) { /*System.out.println("Do nothing"); */  
 							count = 0;
-							if (Runner.state != STATE.OVER) {
+							/*if (Runner.state != STATE.OVER) {
 								c.setFitness(c.getFitness()+1);
-							} 
+							} */
 						}
 						else if (g.act() == 1) {
 							//robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -132,9 +130,9 @@ public class Generation {
 //								Runner.game.player.jump();
 //								Runner.game.player.uncrouch();
 //								}
-							if (Runner.state != STATE.OVER) {
+							/*if (Runner.state != STATE.OVER) {
 								c.setFitness(c.getFitness()+1);
-							}
+							}*/
 							 count = 0;
 						}
 						else if (g.act() == 2) {
@@ -148,13 +146,13 @@ public class Generation {
 //							if (Runner.game.player.jumping == 0) {
 //								Runner.game.player.crouch();
 //							}
-							if (Runner.state != STATE.OVER) {
+							/*if (Runner.state != STATE.OVER) {
 								c.setFitness(c.getFitness()+1);
-							}
+							}*/
 							 count = 0;
 						}
 						if (Runner.state == Runner.STATE.OVER) {
-							//generation.getGenomes().get(i).setFitness(Runner.game.getScore());
+							c.setFitness(Runner.game.getScore());
 							System.out.println("Chromosome " +cNum+ " ended."+" Fitness: "+c.getFitness());
 							break;
 						}

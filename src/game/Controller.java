@@ -27,7 +27,7 @@ public class Controller {
         
         switch (level) {
             case 0:
-                height = 50;
+                height = 10 + random.nextInt(40);
                 rWidth = Runner.WIDTH + width + columns.size() * 900;
                 break;
             case 1:

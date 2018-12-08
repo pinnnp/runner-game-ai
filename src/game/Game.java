@@ -31,6 +31,7 @@ public class Game implements Runnable {
     public static int hasHole = 0;
     private int minX = 0;
     private int minIndex;
+    public static int speed;
     public Game() {
     	in = new ArrayList<Integer>();
         c = new Controller();
@@ -45,7 +46,7 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        int speed = 10; //initial speed
+        speed = 10; //initial speed
         //System.out.println("Game.run()");
         
         while (Runner.state == Runner.STATE.GAME) {
