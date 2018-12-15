@@ -6,9 +6,9 @@ import java.util.Random;
 
 import game.Runner;
 
-public class Chromosome implements Comparable<Object>{
-	private ArrayList<Genome> chromosome;
-	private double fitness = 0;
+public class Chromosome implements Comparable<Object>, Cloneable{
+	public ArrayList<Genome> chromosome;
+	public double fitness = 0;
 	public Chromosome() {
 		//INITIALIZE SPEED [0-500]
 		chromosome = new ArrayList<Genome>();
@@ -19,15 +19,18 @@ public class Chromosome implements Comparable<Object>{
 			//ADD SPEED TO INDEX 0 and SPEED + 10 to 1 of Genome "g"
 			for(int speed = 10; speed < 501; speed = (int) round(speed * 1.2)) {
 				for (int i = 0; i < 2; i++) {
-					Genome g = new Genome();
-					int a = random.nextInt(3);
-					g.setAction(a);
-					g.setGenome(0, speed);
-					g.setGenome(1, (int) round(speed * 1.2));
-					g.setGenome(2, x);
-					g.setGenome(3, x + 5);
-					g.setGenome(4, i);
-					chromosome.add(g);
+					for(int j = 0; j < 2; j++) {
+						Genome g = new Genome();
+						int a = random.nextInt(3);
+						g.setAction(a);
+						g.setGenome(0, speed);
+						g.setGenome(1, (int) round(speed * 1.2));
+						g.setGenome(2, x);
+						g.setGenome(3, x + 5);
+						g.setGenome(4, i);
+						g.setGenome(5, j);
+						chromosome.add(g);
+					}
 				}
 			}
 		}
@@ -35,6 +38,11 @@ public class Chromosome implements Comparable<Object>{
 	
 	public ArrayList<Genome> getChromosome(){
 		return chromosome;
+	}
+	
+	public void setChromosome(ArrayList<Genome> c) {
+		ArrayList<Genome> clone = (ArrayList<Genome>) c.clone();
+		chromosome = clone;
 	}
 	
 	public void setFitness(double f) {
@@ -47,6 +55,17 @@ public class Chromosome implements Comparable<Object>{
 	public int size() {
 		return chromosome.size();
 	}
+	
+	public Object clone() {
+		Chromosome c = new Chromosome();
+		for (int i = 0; i < chromosome.size(); i++) {
+			Genome g = new Genome();
+			g = chromosome.get(i);
+			c.chromosome.set(i, g);
+		}
+		return c;
+	}
+	
 	@Override
 	public int compareTo(Object o) {
 		// TODO Auto-generated method stub

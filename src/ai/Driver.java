@@ -2,13 +2,16 @@ package ai;
 
 //import java.util.ArrayList;
 import game.*;
+import test.test;
 
 
 public class Driver {
+	private Generation generation;
+	
 	public Driver() {
 		//new Runner();
-		Generation generation = new Generation();
-		int genNum=0;
+		generation = new Generation();
+		int genNum = 0;
 		System.out.println("Generation #0 started");
 		generation.execute();
 		generation.keepBestGenomes();
@@ -20,11 +23,9 @@ public class Driver {
 			//crossover and mutation method here
 			generation.nextGen();
 			generation.execute();
-			//runGenomes(generation);
 			generation.keepBestGenomes();
 			System.out.println("Generation #"+genNum+" ended"+" Fittest: "+generation.getBestChromosomes().get(0).getFitness());
-			System.out.println("----------------------------------------------------------");
-			//                                                                                    
+			System.out.println("----------------------------------------------------------");                                                                                
 		}
 	}
 	
@@ -40,6 +41,7 @@ public class Driver {
 		}*/
 	public static void main(String[] args) {
 		new Driver();
+		//test.runTest();
 	}
 
 	
