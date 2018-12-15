@@ -40,7 +40,7 @@ public class Genome implements Cloneable{
 	public Object clone() {
 		Genome g = new Genome();
 		for (int i = 0; i < genome.size(); i++) {
-			g.genome.set(i, genome.get(i));
+			g.genome.add(genome.get(i));
 		}
 		g.action = action;
 		return g;

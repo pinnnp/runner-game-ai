@@ -31,10 +31,11 @@ public class test {
 		*/
 		Chromosome c1 = new Chromosome();
 		Chromosome c2 = new Chromosome();
-		c2.setChromosome(c1.getChromosome());
+		c2 = (Chromosome) c1.clone();
 		c1.setFitness(5);
 		c1.getChromosome().get(0).getGenome().set(0, 6969.0);
 		System.out.println(c1.getChromosome().get(0).get(0)+ " " +c2.getChromosome().get(0).get(0));
+		System.out.println(c1.getFitness()+ " " +c2.getFitness());
 	}
 	
 	public static void main(String[]args) {

@@ -60,7 +60,7 @@ public class Chromosome implements Comparable<Object>, Cloneable{
 		Chromosome c = new Chromosome();
 		for (int i = 0; i < chromosome.size(); i++) {
 			Genome g = new Genome();
-			g = chromosome.get(i);
+			g = (Genome) chromosome.get(i).clone();
 			c.chromosome.set(i, g);
 		}
 		return c;

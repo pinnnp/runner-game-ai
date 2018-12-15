@@ -14,12 +14,12 @@ import game.Runner;
 import game.Runner.STATE;
 
 public class Generation {
-	private ArrayList<Chromosome> chromosomes;
-	private ArrayList<Chromosome> bestChromosomes = new ArrayList<Chromosome>();
+	ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
+	public static ArrayList<Chromosome> bestChromosomes = new ArrayList<Chromosome>();
 	final static double MUTATION_RATE = 0.05;
 	final static int NUM_BEST_CHROMOSOMES = 30; // 1 generation has 30 best chromosomes out of 100 chromosomes.
+	public Robot robot;
 	public Generation() {
-		chromosomes = new ArrayList<Chromosome>();
 		for (int i = 0; i < 100; i++) {
 			chromosomes.add(new Chromosome());
 		}
@@ -29,12 +29,11 @@ public class Generation {
 	
 	public void keepBestGenomes() {
 		bestChromosomes.clear();
-		//System.out.println(chromosomes.size());
-		for (Chromosome c : chromosomes) {
-			System.out.println(c.getFitness());
-		}
+		//Collections.sort(chromosomes);
 		chromosomes.sort(Collections.reverseOrder());
-		System.out.println(chromosomes.get(0).getFitness());
+		for (int i = 0; i < chromosomes.size(); i++) {
+			System.out.println(chromosomes.get(i).getFitness());
+		}
 		for (int i = 0; i < NUM_BEST_CHROMOSOMES; i++) {
 			bestChromosomes.add(chromosomes.get(i));
 		}
@@ -67,7 +66,7 @@ public class Generation {
 	
 	public Chromosome mutation() {
 		Random random = new Random();
-		Chromosome newC = chromosomes.get(random.nextInt(NUM_BEST_CHROMOSOMES));
+		Chromosome newC = (Chromosome) chromosomes.get(random.nextInt(NUM_BEST_CHROMOSOMES)).clone();
 		int numMu = random.nextInt((int) (MUTATION_RATE * 100));
 		for(; numMu>=0; numMu--) {
 			int muLocation = random.nextInt(newC.size());
@@ -92,22 +91,15 @@ public class Generation {
 			new Runner();
 			Runner.state = STATE.GAME;
 			Runner.start();
+			int count = 0;
 			while (Runner.state != STATE.OVER) {
-<<<<<<< HEAD
-				for (Genome g : c.getChromosome()) {
-					if (
-							Game.pSpeed>=g.get(0) && Game.pSpeed<g.get(1) &&
-							Game.pColumnx>=g.get(2) && Game.pColumnx<g.get(3) &&
-							Game.hasHole==g.get(4) && Game.jumppable == g.get(5)
-						){
-						if (g.act() == 0) {}
-=======
 			
 				ArrayList<Double> inputs = new ArrayList<Double>();
 				
 				inputs.add((double) Game.speed);
 				inputs.add((double) Game.pColumnx);
 				inputs.add((double) Game.hasHole);
+				inputs.add((double) Game.jumppable);
 				//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
 				//TODO - EDIT THIS PART!!!!
 			
@@ -116,7 +108,7 @@ public class Generation {
 					count = 0;
 					if (inputs.get(0)>=g.get(0) && inputs.get(0)<g.get(1)) count++;
 					if (inputs.get(1)>=g.get(2) && inputs.get(1)<g.get(3)) count++;
-					if (inputs.get(2)==g.get(4)) count++;
+					if (inputs.get(2)==g.get(4) && inputs.get(3) == g.get(5)) count++;
 					
 					if (count==3) {
 						//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
@@ -129,17 +121,15 @@ public class Generation {
 								c.setFitness(c.getFitness()+1);
 							} */
 						}
->>>>>>> 57f3704ece417ea0f44350a6dcd38e8a5dba1375
 						else if (g.act() == 1) {
+							//robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 							if(Runner.game.player.jumping < 3) Runner.game.mousePressed(1);
 							try {
-								Thread.sleep(250);
+								Thread.sleep(300);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-<<<<<<< HEAD
-=======
 //							if(Runner.game.player.jumping < 2) {
 //								Runner.game.player.jump();
 //								Runner.game.player.uncrouch();
@@ -148,28 +138,15 @@ public class Generation {
 								c.setFitness(c.getFitness()+1);
 							}*/
 							 count = 0;
->>>>>>> 57f3704ece417ea0f44350a6dcd38e8a5dba1375
 						}
 						else if (g.act() == 2) {
 							Runner.game.mousePressed(2);
 							try {
-								Thread.sleep(250);
+								Thread.sleep(300);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-<<<<<<< HEAD
-						}
-						if (Runner.state == Runner.STATE.OVER) {
-							c.setFitness(Runner.game.getScore());
-							bestChromosomes.add(c);
-							try {
-								Thread.sleep(250);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-=======
 //							if (Runner.game.player.jumping == 0) {
 //								Runner.game.player.crouch();
 //							}
@@ -180,12 +157,14 @@ public class Generation {
 						}
 						if (Runner.state == Runner.STATE.OVER) {
 							c.setFitness(Runner.game.getScore());
->>>>>>> 57f3704ece417ea0f44350a6dcd38e8a5dba1375
 							System.out.println("Chromosome " +cNum+ " ended."+" Fitness: "+c.getFitness());
 							break;
 						}
 					}else continue;
+					
 				}
+				
+			
 			} 
 		} 
 	}
