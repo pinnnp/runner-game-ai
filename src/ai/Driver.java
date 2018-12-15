@@ -26,6 +26,7 @@ public class Driver {
 		int genNum=0;
 		System.out.println("Generation #0 started");
 		generation.execute();
+		writeLastestChromosome(generation.getChromosomes());
 		generation.keepBestGenomes();
 		System.out.println("Generation #0 ended"+" Fittest: "+generation.getBestChromosomes().get(0).getFitness());
 		System.out.println("----------------------------------------------------------");
@@ -35,7 +36,7 @@ public class Driver {
 			//crossover and mutation method here
 			generation.nextGen();
 			generation.execute();
-			//runGenomes(generation);
+			writeLastestChromosome(generation.getChromosomes());
 			generation.keepBestGenomes();
 			for (int i = 0; i<30; i++) {System.out.println(generation.bestChromosomes.get(i).getFitness());}
 			System.out.println("Generation #"+genNum+" ended"+" Fittest: "+generation.bestChromosomes.get(0).getFitness());
@@ -49,7 +50,7 @@ public class Driver {
 		if (!lastestChromosome.exists()) {
 			try {
 				lastestChromosome.createNewFile();
-				writeLastestChromosome(null);
+				writeLastestChromosome(new ArrayList<Chromosome>());
 			} catch (IOException ex) {
 				System.err.println("ERROR creating file");
 			}
@@ -58,9 +59,9 @@ public class Driver {
 				BufferedReader reader = new BufferedReader(new FileReader(lastestChromosome));
 				String line;
 				while ((line = reader.readLine()) != null) {
-					line = reader.readLine();
-					s1 = line.split(" "); //list of genomes
 					for (int j=0; j<100; j++) {
+						line = reader.readLine();
+						s1 = line.split(" "); //list of genomes
 						for (int i=0; i<100; i++) {
 							s2 = s1[i].split(",");
 							Genome g = new Genome();
@@ -73,10 +74,10 @@ public class Driver {
 							Chromosome c = new Chromosome(1);
 							c.chromosome.add(g);
 							generation.getChromosomes().add(c);
-						}
+							for (int k=0; k<6; k++) {
+							System.out.println(g.get(k));}
+						} reader.close();
 					}
-					//act = s1[1].split(",");
-					
 				}
 				
 				
