@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import game.Game;
+import game.HighScore;
 import game.Runner;
 import game.Runner.STATE;
 
@@ -18,7 +19,6 @@ public class Generation {
 	public static ArrayList<Chromosome> bestChromosomes = new ArrayList<Chromosome>();
 	final static double MUTATION_RATE = 0.05;
 	final static int NUM_BEST_CHROMOSOMES = 30; // 1 generation has 30 best chromosomes out of 100 chromosomes.
-	public Robot robot;
 	public Generation() {
 		for (int i = 0; i < 100; i++) {
 			chromosomes.add(new Chromosome());
@@ -44,8 +44,9 @@ public class Generation {
 		for (int i=0; i < NUM_BEST_CHROMOSOMES; i++) {
 			chromosomes.add(bestChromosomes.get(i));
 		}
-		for (int i=0; i<50; i++) {chromosomes.add(crossover());}
+		for (int i=0; i<40; i++) {chromosomes.add(crossover());}
 		for (int i=0; i<20; i++) {chromosomes.add(mutation());}
+		for (int i=0; i<10; i++) {chromosomes.add(new Chromosome());}
 	}
 	
 	public Chromosome crossover() {
@@ -85,7 +86,8 @@ public class Generation {
 	
 	public void execute() {
 		int cNum = 0;
-		for (Chromosome c : chromosomes) {
+		for (int i = 0; i < chromosomes.size(); i++) {
+			Chromosome c = chromosomes.get(i);
 			c.setFitness(0);
 			cNum++;
 			new Runner();
@@ -100,8 +102,6 @@ public class Generation {
 				inputs.add((double) Game.pColumnx);
 				inputs.add((double) Game.hasHole);
 				inputs.add((double) Game.jumppable);
-				//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
-				//TODO - EDIT THIS PART!!!!
 			
 				for (Genome g : c.getChromosome()) {
 				
@@ -111,18 +111,10 @@ public class Generation {
 					if (inputs.get(2)==g.get(4) && inputs.get(3) == g.get(5)) count++;
 					
 					if (count==3) {
-						//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
-						//System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
-						//System.out.println(count);
-						//System.out.println(Runner.game.player.y);
 						if (g.act() == 0) { /*System.out.println("Do nothing"); */  
 							count = 0;
-							/*if (Runner.state != STATE.OVER) {
-								c.setFitness(c.getFitness()+1);
-							} */
 						}
 						else if (g.act() == 1) {
-							//robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 							if(Runner.game.player.jumping < 3) Runner.game.mousePressed(1);
 							try {
 								Thread.sleep(300);
@@ -130,13 +122,6 @@ public class Generation {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-//							if(Runner.game.player.jumping < 2) {
-//								Runner.game.player.jump();
-//								Runner.game.player.uncrouch();
-//								}
-							/*if (Runner.state != STATE.OVER) {
-								c.setFitness(c.getFitness()+1);
-							}*/
 							 count = 0;
 						}
 						else if (g.act() == 2) {
@@ -147,25 +132,18 @@ public class Generation {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-//							if (Runner.game.player.jumping == 0) {
-//								Runner.game.player.crouch();
-//							}
-							/*if (Runner.state != STATE.OVER) {
-								c.setFitness(c.getFitness()+1);
-							}*/
 							 count = 0;
 						}
 						if (Runner.state == Runner.STATE.OVER) {
+							if (Runner.game.getScore() < 40) {i--; cNum--; break;}
 							c.setFitness(Runner.game.getScore());
 							System.out.println("Chromosome " +cNum+ " ended."+" Fitness: "+c.getFitness());
+							HighScore.setHighScore(Runner.game.getScore());
 							break;
 						}
 					}else continue;
-					
 				}
-				
-			
-			} 
+			}
 		} 
 	}
 	

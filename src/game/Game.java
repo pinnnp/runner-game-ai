@@ -134,6 +134,7 @@ public class Game implements Runnable {
     }
 
     void render(Graphics g) {
+    	
         g.setColor(Color.black);
         g.fillRect(0, 0, Runner.WIDTH, Runner.HEIGHT);
 
@@ -152,22 +153,25 @@ public class Game implements Runnable {
 
         g.setColor(Color.white);
         g.setFont(new Font("Arial", 1, 100));
-
+        /*
         if (Runner.state == Runner.STATE.OVER) {
             g.drawString("GameOver", 75, Runner.HEIGHT / 2);
             HighScore.setHighScore(score);
         }
-
+        */
+        
         g.setFont(new Font("Arial", 1, 50));
 
         if (Runner.state == Runner.STATE.GAME) {
             score++;
         }
+        
         String scoreString = "Score : " + score;
         g.drawString(scoreString, 20, Runner.HEIGHT - 50);
         
         String levelString = "Level : " + level;
         g.drawString(levelString, Runner.WIDTH - 250, Runner.HEIGHT - 50);
+        
     }
 
     public void mousePressed(MouseEvent e) {

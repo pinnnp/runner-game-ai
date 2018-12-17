@@ -2,7 +2,7 @@ package game;
 
 import java.io.*;
 
-class HighScore {
+public class HighScore {
 
     private static final File scoreFile = new File("score.txt");
     
