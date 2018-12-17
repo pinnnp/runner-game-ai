@@ -9,6 +9,9 @@ import game.Runner;
 public class Chromosome implements Comparable<Object>, Cloneable{
 	public ArrayList<Genome> chromosome;
 	public double fitness = 0;
+	public Chromosome(int i) {
+		chromosome = new ArrayList<Genome>();
+	}
 	public Chromosome() {
 		//INITIALIZE SPEED [0-500]
 		chromosome = new ArrayList<Genome>();
