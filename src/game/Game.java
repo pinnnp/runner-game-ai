@@ -67,7 +67,7 @@ public class Game implements Runnable {
             pColumnx = columni.x;
             pColumny = columni.y;
             pColumnh = columni.height;
-            jumppable = columni.height > 40 ? 0:1;
+            jumppable = columni.height > 35 ? 0:1;
             hasHole = Runner.HEIGHT - pColumnh - 120 - pColumny == 20 ? 1 : 0;
             
             if (ticks % 2 == 0 && player.ymotion < 15) {
