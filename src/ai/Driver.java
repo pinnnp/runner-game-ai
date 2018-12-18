@@ -38,7 +38,7 @@ public class Driver {
 			generation.execute();
 			writeLastestChromosome(generation.getChromosomes());
 			generation.keepBestGenomes();
-			for (int i = 0; i<30; i++) {System.out.println(generation.bestChromosomes.get(i).getFitness());}
+			//for (int i = 0; i<30; i++) {System.out.println(generation.bestChromosomes.get(i).getFitness());}
 			System.out.println("Generation #"+genNum+" ended"+" Fittest: "+generation.bestChromosomes.get(0).getFitness());
 			System.out.println("----------------------------------------------------------");
 			//                                                                                    
@@ -61,8 +61,8 @@ public class Driver {
 				while ((line = reader.readLine()) != null) {
 					for (int j=0; j<100; j++) {
 						line = reader.readLine();
-						s1 = line.split(" "); //list of genomes
-						for (int i=0; i<100; i++) {
+						s1 = line.split(";"); //list of genomes
+						for (int i=0; i<s1.length; i++) {
 							s2 = s1[i].split(",");
 							Genome g = new Genome();
 							g.setAction(Integer.parseInt(s2[5]));

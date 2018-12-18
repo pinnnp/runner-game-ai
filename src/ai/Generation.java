@@ -3,6 +3,7 @@ package ai;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -15,17 +16,16 @@ import game.Runner;
 import game.Runner.STATE;
 
 public class Generation {
-	ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
+	private static ArrayList<Chromosome> chromosomes = new ArrayList<Chromosome>();
 	public static ArrayList<Chromosome> bestChromosomes = new ArrayList<Chromosome>();
-	final static double MUTATION_RATE = 0.05;
+	public static int cNum;
+	final static double MUTATION_RATE = 0.2;
 	final static int NUM_BEST_CHROMOSOMES = 30; // 1 generation has 30 best chromosomes out of 100 chromosomes.
 	public Generation() {
 		for (int i = 0; i < 100; i++) {
 			chromosomes.add(new Chromosome());
 		}
 	}
-	
-	//public execute
 	
 	public void keepBestGenomes() {
 		bestChromosomes.clear();
@@ -44,9 +44,9 @@ public class Generation {
 		for (int i=0; i < NUM_BEST_CHROMOSOMES; i++) {
 			chromosomes.add(bestChromosomes.get(i));
 		}
-		for (int i=0; i<40; i++) {chromosomes.add(crossover());}
+		for (int i=0; i<30; i++) {chromosomes.add(crossover());}
 		for (int i=0; i<20; i++) {chromosomes.add(mutation());}
-		for (int i=0; i<10; i++) {chromosomes.add(new Chromosome());}
+		for (int i=0; i<20; i++) {chromosomes.add(new Chromosome());}
 	}
 	
 	public Chromosome crossover() {
@@ -68,7 +68,7 @@ public class Generation {
 	public Chromosome mutation() {
 		Random random = new Random();
 		Chromosome newC = (Chromosome) chromosomes.get(random.nextInt(NUM_BEST_CHROMOSOMES)).clone();
-		int numMu = random.nextInt((int) (MUTATION_RATE * 100));
+		int numMu = random.nextInt((int) (MUTATION_RATE * newC.size()));
 		for(; numMu>=0; numMu--) {
 			int muLocation = random.nextInt(newC.size());
 			newC.getChromosome().get(muLocation).mutates();
@@ -84,35 +84,25 @@ public class Generation {
 		return this.chromosomes;
 	}
 	
+	public static void setDead(int score) {
+		chromosomes.get(cNum - 1).setFitness(score);
+		System.out.println("Chromosome " +cNum+ " ended."+" Fitness: "+chromosomes.get(cNum - 1).getFitness());
+	}
+	
 	public void execute() {
-		int cNum = 0;
+		cNum = 0;
 		for (int i = 0; i < chromosomes.size(); i++) {
 			Chromosome c = chromosomes.get(i);
-			c.setFitness(0);
 			cNum++;
+			Runner.state = Runner.STATE.GAME;
 			new Runner();
-			Runner.state = STATE.GAME;
 			Runner.start();
-			int count = 0;
 			while (Runner.state != STATE.OVER) {
-			
-				ArrayList<Double> inputs = new ArrayList<Double>();
-				
-				inputs.add((double) Game.speed);
-				inputs.add((double) Game.pColumnx);
-				inputs.add((double) Game.hasHole);
-				inputs.add((double) Game.jumppable);
-			
 				for (Genome g : c.getChromosome()) {
-				
-					count = 0;
-					if (inputs.get(0)>=g.get(0) && inputs.get(0)<g.get(1)) count++;
-					if (inputs.get(1)>=g.get(2) && inputs.get(1)<g.get(3)) count++;
-					if (inputs.get(2)==g.get(4) && inputs.get(3) == g.get(5)) count++;
-					
-					if (count==3) {
-						if (g.act() == 0) { /*System.out.println("Do nothing"); */  
-							count = 0;
+					if (Game.speed>=g.get(0) && Game.speed<g.get(1) 
+							&& Game.pColumnx>=g.get(2) && Game.pColumnx<g.get(3)
+							&& Game.hasHole==g.get(4) && Game.jumppable == g.get(5)) {
+						if (g.act() == 0) { /*System.out.println("Do nothing");*/ 
 						}
 						else if (g.act() == 1) {
 							if(Runner.game.player.jumping < 3) Runner.game.mousePressed(1);
@@ -122,7 +112,6 @@ public class Generation {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							 count = 0;
 						}
 						else if (g.act() == 2) {
 							Runner.game.mousePressed(2);
@@ -132,13 +121,8 @@ public class Generation {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							 count = 0;
 						}
 						if (Runner.state == Runner.STATE.OVER) {
-							if (Runner.game.getScore() < 40) {i--; cNum--; break;}
-							c.setFitness(Runner.game.getScore());
-							System.out.println("Chromosome " +cNum+ " ended."+" Fitness: "+c.getFitness());
-							HighScore.setHighScore(Runner.game.getScore());
 							break;
 						}
 					}else continue;

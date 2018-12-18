@@ -9,7 +9,7 @@ import java.util.Random;
 public class Controller {
     
     public ArrayList<Rectangle> columns = new ArrayList<>();
-    public Random random = new Random(5);
+    public Random random = new Random(17);
     public int hole;
     
     public Controller() {
@@ -53,7 +53,7 @@ public class Controller {
     }
       
     public void paintColumn(Graphics g, Rectangle column) {
-        g.setColor(Color.yellow.darker());
+        g.setColor(Color.yellow);
         g.fillRect(column.x, column.y, column.width, column.height);
     }
     
