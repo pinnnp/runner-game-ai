@@ -88,7 +88,7 @@ public class Driver {
 							//System.out.println(generation.chromosomes.);
 							System.out.println("\n");
 							*/
-						} generation.chromosomes.add(c);
+						} generation.getChromosomes().add(c);
 					}
 				
 				

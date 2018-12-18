@@ -25,10 +25,10 @@ public class Generation {
 		for (int i = 0; i < 100; i++) {
 			chromosomes.add(new Chromosome());
 		}
-		System.out.println(chromosomes.get(0).size());
 	}
+	
 	public Generation(int i) {
-		this.chromosomes = new ArrayList<Chromosome>();
+		chromosomes = new ArrayList<Chromosome>();
 	}
 	
 	public void keepBestGenomes() {
@@ -94,88 +94,19 @@ public class Generation {
 	}
 	
 	public void execute() {
-<<<<<<< HEAD
-		int cNum = 0;
-		for (Chromosome c : chromosomes) {
-			//System.out.println(c.getChromosome().get(6).get(0));
-			c.setFitness(0);
-||||||| merged common ancestors
-		int cNum = 0;
-		for (Chromosome c : chromosomes) {
-			c.setFitness(0);
-=======
 		cNum = 0;
 		for (int i = 0; i < chromosomes.size(); i++) {
 			Chromosome c = chromosomes.get(i);
->>>>>>> 90beecdc9402033aa64a4d0be1fb976af9327cc8
 			cNum++;
 			Runner.state = Runner.STATE.GAME;
 			new Runner();
 			Runner.start();
 			while (Runner.state != STATE.OVER) {
-<<<<<<< HEAD
-				ArrayList<Double> inputs = new ArrayList<Double>();
-				
-				inputs.add((double) Game.speed);
-				inputs.add((double) Game.pColumnx);
-				inputs.add((double) Game.hasHole);
-				inputs.add((double) Game.jumppable);
-				//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
-			
-||||||| merged common ancestors
-			
-				ArrayList<Double> inputs = new ArrayList<Double>();
-				
-				inputs.add((double) Game.speed);
-				inputs.add((double) Game.pColumnx);
-				inputs.add((double) Game.hasHole);
-				inputs.add((double) Game.jumppable);
-				//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
-				//TODO - EDIT THIS PART!!!!
-			
-=======
->>>>>>> 90beecdc9402033aa64a4d0be1fb976af9327cc8
 				for (Genome g : c.getChromosome()) {
-<<<<<<< HEAD
-					//System.out.println("inputs: "+g.get(0)+" "+g.get(1)+" "+g.get(2));
-					count = 0;
-					if (inputs.get(0)>=g.get(0) && inputs.get(0)<g.get(1)) count++;
-					if (inputs.get(1)>=g.get(2) && inputs.get(1)<g.get(3)) count++;
-					if (inputs.get(2)==g.get(4) && inputs.get(3) == g.get(5)) count++;
-//					System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4)+" "+g.get(5));
-					if (count==3) {
-//						System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
-//						System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
-						//System.out.println(count);
-						//System.out.println(Runner.game.player.y);
-						if (g.act() == 0) { /*System.out.println("Do nothing"); */  
-							count = 0;
-							/*if (Runner.state != STATE.OVER) {
-								c.setFitness(c.getFitness()+1);
-							} */
-||||||| merged common ancestors
-				
-					count = 0;
-					if (inputs.get(0)>=g.get(0) && inputs.get(0)<g.get(1)) count++;
-					if (inputs.get(1)>=g.get(2) && inputs.get(1)<g.get(3)) count++;
-					if (inputs.get(2)==g.get(4) && inputs.get(3) == g.get(5)) count++;
-					
-					if (count==3) {
-						//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
-						//System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
-						//System.out.println(count);
-						//System.out.println(Runner.game.player.y);
-						if (g.act() == 0) { /*System.out.println("Do nothing"); */  
-							count = 0;
-							/*if (Runner.state != STATE.OVER) {
-								c.setFitness(c.getFitness()+1);
-							} */
-=======
 					if (Game.speed>=g.get(0) && Game.speed<g.get(1) 
 							&& Game.pColumnx>=g.get(2) && Game.pColumnx<g.get(3)
 							&& Game.hasHole==g.get(4) && Game.jumppable == g.get(5)) {
 						if (g.act() == 0) { /*System.out.println("Do nothing");*/ 
->>>>>>> 90beecdc9402033aa64a4d0be1fb976af9327cc8
 						}
 						else if (g.act() == 1) {
 							if(Runner.game.player.jumping < 3) Runner.game.mousePressed(1);
@@ -196,6 +127,7 @@ public class Generation {
 							}
 						}
 						if (Runner.state == Runner.STATE.OVER) {
+							g.mutates();
 							break;
 						}
 					}else continue;
