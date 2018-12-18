@@ -9,7 +9,7 @@ import java.util.Random;
 public class Controller {
     
     public ArrayList<Rectangle> columns = new ArrayList<>();
-    public Random random = new Random();
+    public Random random = new Random(4);
     public int hole;
     
     public Controller() {

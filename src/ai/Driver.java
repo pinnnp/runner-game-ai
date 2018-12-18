@@ -19,10 +19,15 @@ public class Driver {
 	
 	private static Generation generation;
 	private static final File lastestChromosome = new File("lastestChromosome.txt");
+	private BufferedReader reader;
 	
 	public Driver() {
 		//new Runner();
-		generation = new Generation();
+		if (lastestChromosome.exists()) {
+			generation = new Generation(1);
+			getLastestChromosome();
+			System.out.println(generation.chromosomes.get(4).chromosome.get(0).act());
+		} else generation = new Generation();
 		int genNum=0;
 		System.out.println("Generation #0 started");
 		generation.execute();
@@ -44,9 +49,9 @@ public class Driver {
 			//                                                                                    
 		}
 	}
-	public static ArrayList<Chromosome> getLastestChromosome() {
-		String[] s1,s2; 
-		ArrayList<Chromosome> a;
+	public static void getLastestChromosome() {
+		String[] s1 = new String[22880];
+		BufferedReader reader = null;
 		if (!lastestChromosome.exists()) {
 			try {
 				lastestChromosome.createNewFile();
@@ -56,38 +61,47 @@ public class Driver {
 			}
 		} else {
 			try {
-				BufferedReader reader = new BufferedReader(new FileReader(lastestChromosome));
+				reader = new BufferedReader(new FileReader(lastestChromosome));
 				String line;
 				while ((line = reader.readLine()) != null) {
-					for (int j=0; j<100; j++) {
-						line = reader.readLine();
-						s1 = line.split(" "); //list of genomes
-						for (int i=0; i<100; i++) {
-							s2 = s1[i].split(",");
+					int num=0;
+					s1 = line.split(";"); //list of genomes
+					//System.out.println(s1.length);
+					Chromosome c = new Chromosome(1);
+						for (int i=0; i<s1.length; i++) {
+							//if(i == 0)System.out.println(s1[i]);
+							String[] s2 = s1[i].split(",");
 							Genome g = new Genome();
-							g.setAction(Integer.parseInt(s2[5]));
-							g.setGenome(0, Integer.parseInt(s2[0]));
-							g.setGenome(1, Integer.parseInt(s2[1]));
-							g.setGenome(2, Integer.parseInt(s2[2]));
-							g.setGenome(3, Integer.parseInt(s2[3]));
-							g.setGenome(4, Integer.parseInt(s2[4]));
-							Chromosome c = new Chromosome(1);
+							g.setAction(Integer.parseInt(s2[6]));
+							g.setGenome(0, Double.parseDouble(s2[0]));
+							g.setGenome(1, Double.parseDouble(s2[1]));
+							g.setGenome(2, Double.parseDouble(s2[2]));
+							g.setGenome(3, Double.parseDouble(s2[3]));
+							g.setGenome(4, Double.parseDouble(s2[4]));
+							g.setGenome(5, Double.parseDouble(s2[5]));
 							c.chromosome.add(g);
-							generation.getChromosomes().add(c);
+							num++;
+							/*
+							System.out.println(num);
 							for (int k=0; k<6; k++) {
-							System.out.println(g.get(k));}
-						} reader.close();
+							System.out.print(g.get(k)+" ");}
+							//System.out.println(generation.chromosomes.);
+							System.out.println("\n");
+							*/
+						} generation.chromosomes.add(c);
 					}
-				}
 				
 				
-				//lastestChromosome = new ArrayList<Chromosome>(Arrays.asList(currentChromosome));
 			} catch (IOException ex) {
 				System.err.println("ERROR reading current chromosome");
+			} finally {
+				try {
+					reader.close();
+				} catch (IOException ex) {
+					
+				}
 			}
-		}
-		return null;
-		
+		}	
 	}
 	
 	public static void setLastestChromosome(ArrayList<Chromosome> c) {
@@ -103,12 +117,12 @@ public class Driver {
 							String s = String.valueOf(g.get(i));
 							writer.write(s+",");
 					}
-					writer.write(g.act()+" ");
+					writer.write(g.act()+";");
 				} writer.write("\n");
 			}
 			writer.close();
 		} catch (IOException ex){
-			System.err.println("ERROR setting lastest chromosome to file");
+			System.err.println("ERROR writing lastest chromosome to file");
 		}
 	}
 	

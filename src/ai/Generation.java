@@ -23,6 +23,10 @@ public class Generation {
 		for (int i = 0; i < 100; i++) {
 			chromosomes.add(new Chromosome());
 		}
+		System.out.println(chromosomes.get(0).size());
+	}
+	public Generation(int i) {
+		this.chromosomes = new ArrayList<Chromosome>();
 	}
 	
 	//public execute
@@ -86,6 +90,7 @@ public class Generation {
 	public void execute() {
 		int cNum = 0;
 		for (Chromosome c : chromosomes) {
+			//System.out.println(c.getChromosome().get(6).get(0));
 			c.setFitness(0);
 			cNum++;
 			new Runner();
@@ -93,7 +98,6 @@ public class Generation {
 			Runner.start();
 			int count = 0;
 			while (Runner.state != STATE.OVER) {
-			
 				ArrayList<Double> inputs = new ArrayList<Double>();
 				
 				inputs.add((double) Game.speed);
@@ -101,18 +105,17 @@ public class Generation {
 				inputs.add((double) Game.hasHole);
 				inputs.add((double) Game.jumppable);
 				//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
-				//TODO - EDIT THIS PART!!!!
 			
 				for (Genome g : c.getChromosome()) {
-				
+					//System.out.println("inputs: "+g.get(0)+" "+g.get(1)+" "+g.get(2));
 					count = 0;
 					if (inputs.get(0)>=g.get(0) && inputs.get(0)<g.get(1)) count++;
 					if (inputs.get(1)>=g.get(2) && inputs.get(1)<g.get(3)) count++;
 					if (inputs.get(2)==g.get(4) && inputs.get(3) == g.get(5)) count++;
-					
+//					System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4)+" "+g.get(5));
 					if (count==3) {
-						//System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
-						//System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
+//						System.out.println("inputs: "+inputs.get(0)+" "+inputs.get(1)+" "+inputs.get(2));
+//						System.out.println("g: "+g.get(0)+" "+g.get(2)+" "+g.get(4));
 						//System.out.println(count);
 						//System.out.println(Runner.game.player.y);
 						if (g.act() == 0) { /*System.out.println("Do nothing"); */  
