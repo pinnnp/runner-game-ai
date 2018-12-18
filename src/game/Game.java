@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ai.Generation;
+
 /**
  * @author Poulet
  */
@@ -36,7 +38,7 @@ public class Game implements Runnable {
     public Game() {
     	in = new ArrayList<Integer>();
         c = new Controller();
-        player = new Player(Runner.WIDTH / 3, Runner.HEIGHT / 2, 20, 40);
+        player = new Player(Runner.WIDTH / 3, Runner.HEIGHT - 160, 20, 40);
         score = 0;
         in = new ArrayList<Integer>(Arrays.asList(10,pColumnx,hasHole));
         //add level from Controller that is obstacle class
@@ -67,7 +69,7 @@ public class Game implements Runnable {
             pColumnx = columni.x;
             pColumny = columni.y;
             pColumnh = columni.height;
-            jumppable = columni.height > 40 ? 0:1;
+            jumppable = columni.height > 35 ? 0:1;
             hasHole = Runner.HEIGHT - pColumnh - 120 - pColumny == 20 ? 1 : 0;
             
             if (ticks % 2 == 0 && player.ymotion < 15) {
@@ -99,9 +101,10 @@ public class Game implements Runnable {
             player.y += player.ymotion;
 
             for (Rectangle column : c.columns) {
-                if (column.intersects(player)) {
+                if (column.intersects(player) && score > 40) {
+                	System.out.println("Intersects scores:" + score + " cx: " + column.x + " player.x: " + player.x);
+                	Generation.setDead(score);
                     Runner.state = Runner.STATE.OVER;
-
                     player.x = column.x - player.width;
                 }
             }
@@ -134,6 +137,7 @@ public class Game implements Runnable {
     }
 
     void render(Graphics g) {
+    	
         g.setColor(Color.black);
         g.fillRect(0, 0, Runner.WIDTH, Runner.HEIGHT);
 
@@ -152,22 +156,25 @@ public class Game implements Runnable {
 
         g.setColor(Color.white);
         g.setFont(new Font("Arial", 1, 100));
-
+        
         if (Runner.state == Runner.STATE.OVER) {
             g.drawString("GameOver", 75, Runner.HEIGHT / 2);
             HighScore.setHighScore(score);
         }
-
+        
+        
         g.setFont(new Font("Arial", 1, 50));
 
         if (Runner.state == Runner.STATE.GAME) {
             score++;
         }
+        
         String scoreString = "Score : " + score;
         g.drawString(scoreString, 20, Runner.HEIGHT - 50);
         
         String levelString = "Level : " + level;
         g.drawString(levelString, Runner.WIDTH - 250, Runner.HEIGHT - 50);
+        
     }
 
     public void mousePressed(MouseEvent e) {

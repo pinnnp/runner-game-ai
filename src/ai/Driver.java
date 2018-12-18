@@ -26,7 +26,7 @@ public class Driver {
 		if (lastestChromosome.exists()) {
 			generation = new Generation(1);
 			getLastestChromosome();
-			System.out.println(generation.chromosomes.get(4).chromosome.get(0).act());
+			//System.out.println(generation.chromosomes.get(4).chromosome.get(0).act());
 		} else generation = new Generation();
 		int genNum=0;
 		System.out.println("Generation #0 started");
